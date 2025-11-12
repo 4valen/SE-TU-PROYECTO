@@ -52,15 +52,17 @@
                 </div>
             </div>
             <div class="col">
-                <div class="mb-3">
-                    <label for="id_genero" class="form-label">Género</label>
-                    <select class="form-select" id="id_genero" name="id_genero" required>
-                        <option value="">Seleccione...</option>
-                        {% for genero in generos %}
-                            <option value="{{ genero.id_genero }}">{{ genero.genero }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+            <div class="mb-3">
+                <label for="id_genero" class="form-label">Género</label>
+                <select class="form-select" id="id_genero" name="id_genero" required>
+                    <option value="">Seleccione...</option>
+                    {% for genero in generos %}
+                        <option value="{{ genero.id_genero }}" 
+                            {% if genero.id_genero == selected_genero %}selected{% endif %}>
+                            {{ genero.genero }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
 

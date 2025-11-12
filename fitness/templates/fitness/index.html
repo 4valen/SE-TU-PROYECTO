@@ -1,7 +1,12 @@
+
+   
+
+
 {% extends 'fitness/layout.html' %}
 {% load static %}
+
 <link rel="stylesheet" href="{% static 'fitness/static/fitness/estilo.css' %}">
-{% block title %} INICIO - Transforma tu cuerpo y tu vida {% endblock %}
+{% block title %} INICIO -   {% endblock %}
   
 {% block content %}
 <!-- Hero Section -->
@@ -13,11 +18,12 @@
                     {% if request.user.is_authenticated %}
                         Bienvenid@, <span class="text-capitalize">{{ nombre_completo }}</span>
                     {% else %}
-                        Transforma tu cuerpo, transforma tu vida
+                        Transforma tu cuerpo, transforma tu vida 🏋️
                     {% endif %}
                 </h1>
                 {% if not request.user.is_authenticated %}
-                <p class="lead text-light mb-4">Únete a miles de personas que ya han logrado sus objetivos de fitness con nuestro programa personalizado.</p>
+                <p class="lead text-light mb-4">Únete a miles de personas que ya han logrado sus objetivos de fitness con nuestro programa personalizado 🏋️‍♀️🥗💧.</p>
+
                 <div class="d-flex flex-column flex-sm-row gap-3">
                     <a href="{% url 'Registro' %}" class="btn btn-light btn-lg px-4 py-2 fw-bold">
                         Comienza tu transformación

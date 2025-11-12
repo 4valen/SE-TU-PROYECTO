@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
 import python_avatars as pa
-
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar_svg = models.TextField(blank=True)
@@ -27,6 +28,7 @@ class Datos(models.Model):
     PERFIL_CHOICES = [
         ('entrenador', 'Entrenador'),
         ('estudiante', 'Estudiante'),
+        
     ]
     
     rut = models.CharField(primary_key=True, max_length=10)
@@ -42,7 +44,7 @@ class Datos(models.Model):
     perfil = models.CharField(max_length=15, choices=PERFIL_CHOICES, default='estudiante', null=True, blank=True)
     activo = models.IntegerField()
     # Nueva relación con el modelo User de Django
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return str(self.nombre) + " " + str(self.apellido_paterno)
@@ -50,6 +52,17 @@ class Datos(models.Model):
     class Meta:      
         ordering = ['rut']
 
+    def es_administrador(self):
+        # El administrador principal se identifica por username y password específicos
+        return self.user.username == 'admin' and self.user.check_password('admin123')
+        receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs): se descomentara el viernes
+#     if created:
+#         UserProfile.objects.create(user=instance)
+
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.userprofile.save()
 class VidaSaludable(models.Model):
     vegetal_favorito = models.CharField(max_length=100)
     peso = models.FloatField()  # Aquí se corrige el error

@@ -18,4 +18,9 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('success/', views.success_view, name='success'),  
     path('dashboard/', views.index, name='dashboard'),
-    ]
+    path('admin-vista/', views.admin_vista, name='admin_vista'),
+    path('gestion-usuarios/', views.gestion_usuarios, name='gestion_usuarios'),
+    path('cambiar-estado/<int:user_id>/', views.cambiar_estado_usuario, name='cambiar_estado'),
+    path('eliminar-usuario/<int:user_id>/', views.eliminar_usuario, name='eliminar_usuario'),
+]
+    

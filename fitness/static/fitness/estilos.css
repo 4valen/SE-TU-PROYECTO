@@ -1,3 +1,110 @@
+/* ESTILOS PARA LAS ESTADÍSTICAS EN HORIZONTAL */
+.stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.stats-row .col-md-3 {
+    flex: 0 0 24%; /* Un poco menos del 25% para tener espacio entre ellas */
+    max-width: 24%;
+}
+
+.admin-stats-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: none;
+    height: 100%;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.admin-stats-card .card-body {
+    padding: 2rem 1rem;
+    text-align: center;
+    width: 100%;
+}
+
+.admin-stats-card .card-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.admin-stats-card .card-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.admin-stats-card small {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-row .col-md-3 {
+        flex: 0 0 48%;
+        max-width: 48%;
+    }
+    
+    .admin-stats-card .card-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-row .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Estilos para las otras secciones */
+.admin-actions-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.admin-actions-card .card-header {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    color: white;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 1rem 1.5rem;
+}
+
+.admin-actions-buttons .btn {
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.admin-actions-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.admin-users-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+ 
+ 
  .bg-gradient-primary {
         background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
     }
@@ -308,3 +415,114 @@ body{
             flex-direction: column;
         }
     }
+/* Estilos para el Panel de Administración */
+.admin-title {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.admin-stats-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+}
+
+.admin-stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.admin-stats-card .card-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.admin-stats-card .card-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-stats-card small {
+    opacity: 0.9;
+    font-size: 0.85rem;
+}
+
+.admin-actions-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.admin-actions-card .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    border: none;
+}
+
+.admin-actions-buttons .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.admin-actions-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.admin-users-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.admin-users-card .card-header {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    border: none;
+}
+
+.admin-users-table {
+    margin-bottom: 0;
+}
+
+.admin-users-table th {
+    border-top: none;
+    font-weight: 600;
+    padding: 15px 12px;
+}
+
+.admin-users-table td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.admin-actions-group .btn {
+    border-radius: 5px;
+    padding: 6px 10px;
+    transition: all 0.2s ease;
+}
+
+.admin-actions-group .btn:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-stats-card .card-title {
+        font-size: 2rem;
+    }
+    
+    .admin-actions-buttons {
+        flex-direction: column;
+    }
+    
+    .admin-actions-buttons .btn {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}

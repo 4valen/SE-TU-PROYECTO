@@ -23,7 +23,7 @@ def perfil_usuario(request):
 @login_required
 def logout_view(request):
     auth_logout(request)
-    messages.success(request, 'Has cerrado sesión correctamente.')
+    # messages.success(request, 'Has cerrado sesión correctamente.')
     return redirect('index')
 def index(request):
     # Obtener el nombre completo del usuario si está autenticado
@@ -39,19 +39,20 @@ def index(request):
     
     context = {'nombre_completo': nombre_completo}
     return render(request, 'fitness/index.html', context)
+@login_required
 def layout(request):
     context = {}
     return render(request, 'fitness/layout.html', context)
 
-@login_required
+@login_required(login_url="login")
 def categoria(request):
     context = {}
     return render(request, 'fitness/categoria.html', context)
-
+@login_required
 def consejos(request):
     context = {}
     return render(request, 'fitness/consejos.html', context)
-
+@login_required
 def generacion(request):
     context = {}
     return render(request, 'fitness/generacion.html', context)
@@ -85,6 +86,19 @@ def login(request):
         print("Usuario recibido:", username)
         print("Contraseña recibida:", password)
         print("Intentando autenticar:", username, password)  # <- temporal
+        #verificar al admin 
+        if username == 'admin' and password == 'admin123':
+            admin_user, created = User.objects.get_or_create(username='admin',defaults={'is_staff': True})
+            if created:
+                admin_user.set_password('admin123')
+                admin_user.save()
+                print("Usuario administrador creado.")
+        #aum¿tenticamos al admin , al mero mero
+            user = authenticate(request, username='admin', password='admin123')
+            if user is not None:
+                auth_login(request, user)
+                messages.success(request, '¡Bienvenido Administrador Principal!')
+                return redirect('admin_vista')
         # Autenticar al usuario
         user = authenticate(request, username=username, password=password)
         print("Resultado de authenticate():", user)
@@ -122,6 +136,13 @@ def Registro(request):
             username = request.POST.get('username')
             password = request.POST.get('password')
             perfil = request.POST.get('perfil')
+
+             # VALIDACIÓN: No permitir registro como 'admin'
+            if username.lower() == 'admin':
+                messages.error(request, 'Este nombre de usuario no está disponible.')
+                generos = Genero.objects.all()
+                context = {'generos': generos}
+                return render(request, 'fitness/Registro.html', context)
 
             # Validar que se haya seleccionado un perfil
             if not perfil:
@@ -180,7 +201,86 @@ def Registro(request):
     generos = Genero.objects.all()
     context = {'generos': generos}
     return render(request, 'fitness/Registro.html', context)
+# VISTAS DE ADMINISTRACIÓN
+@login_required
+def admin_vista(request):
+    """Panel de administración"""
+    if not (request.user.username == 'admin' and request.user.check_password('admin123')):
+        messages.error(request, 'Acceso denegado. Solo para administrador principal.')
+        return redirect('consejos')
+    
+    # Estadísticas
+    total_usuarios = User.objects.count()
+    total_datos = Datos.objects.count()
+    usuarios_activos = Datos.objects.filter(activo=1).count()
+    usuarios_inactivos = Datos.objects.filter(activo=0).count()
+    
+    # Usuarios recientes (últimos 5)
+    usuarios_recientes = User.objects.all().order_by('-date_joined')[:5]
+    
+    context = {
+        'total_usuarios': total_usuarios,
+        'total_datos': total_datos,
+        'usuarios_activos': usuarios_activos,
+        'usuarios_inactivos': usuarios_inactivos,
+        'usuarios_recientes': usuarios_recientes,
+    }
+    return render(request, 'fitness/admin_vista.html', context)
+@login_required
+def gestion_usuarios(request):
+    # SOLO el admin principal puede acceder
+    if not (request.user.username == 'admin' and request.user.check_password('admin123')):
+        messages.error(request, 'Acceso denegado.')
+        return redirect('consejos')
+    
+    usuarios = User.objects.all().select_related('datos')
+    return render(request, 'fitness/gestion_usuarios.html', {'usuarios': usuarios})
 
+@login_required
+def cambiar_estado_usuario(request, user_id):
+    if not (request.user.username == 'admin' and request.user.check_password('admin123')):
+        messages.error(request, 'Acceso denegado.')
+        return redirect('consejos')
+    
+    usuario = get_object_or_404(User, id=user_id)
+    
+    # No permitir modificar al admin principal
+    if usuario.username == 'admin':
+        messages.error(request, 'No se puede modificar el administrador principal')
+        return redirect('gestion_usuarios')
+    
+    try:
+        datos_usuario = Datos.objects.get(user=usuario)
+        # Cambiar estado (activo/inactivo)
+        datos_usuario.activo = 0 if datos_usuario.activo == 1 else 1
+        datos_usuario.save()
+        
+        estado = "activado" if datos_usuario.activo == 1 else "desactivado"
+        messages.success(request, f'Usuario {usuario.username} {estado} correctamente')
+    
+    except Datos.DoesNotExist:
+        messages.error(request, f'El usuario {usuario.username} no tiene perfil completo')
+    
+    return redirect('gestion_usuarios')
+
+@login_required
+def eliminar_usuario(request, user_id):
+    if not (request.user.username == 'admin' and request.user.check_password('admin123')):
+        messages.error(request, 'Acceso denegado.')
+        return redirect('consejos')
+    
+    usuario = get_object_or_404(User, id=user_id)
+    
+    # No permitir eliminar al admin principal
+    if usuario.username == 'admin':
+        messages.error(request, 'No se puede eliminar el administrador principal')
+        return redirect('gestion_usuarios')
+    
+    username = usuario.username
+    usuario.delete()
+    messages.success(request, f'Usuario {username} eliminado correctamente')
+    
+    return redirect('gestion_usuarios')
 def vida_saludable_form(request):
     if request.method == 'POST':
         form = VidaSaludableForm(request.POST)
@@ -195,7 +295,7 @@ def vida_saludable_form(request):
 
 def success_view(request):
     return render(request, 'success.html')
-
+@login_required(login_url="login")
 def lista(request, pk=None, action=None):
     if pk and action:
         objeto = get_object_or_404(Datos, pk=pk)
