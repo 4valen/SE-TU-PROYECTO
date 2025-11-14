@@ -48,19 +48,26 @@
               </li>
              
               <li class="nav-item">
-                <a class="nav-link" href="login"><p id="paranav" >Login</p></a>
+                <a class="nav-link" href="{% url 'login' %}"><p id="paranav" >Login</p></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="lista"><p id="paranav" >Administracion</p></a>
-              </li>
+             {% if user.is_authenticated and user.datos and user.datos.es_administrador %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'lista' %}">
+                        <p id="paranav">Administración</p>
+                    </a>
+                </li>
+            {% endif %}
+
               {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="consejos"><p id="paranav" >Sugerencias y consejos</p></a>
+                <a class="nav-link" href="{% url 'consejos' %}"><p id="paranav" >Sugerencias y consejos</p></a>
               </li>
-              {% endif %}
+             
+
                <li class="nav-item">
-                <a class="nav-link" href="generacion"><p id="paranav" > generación</p></a>
+                <a class="nav-link" href="{% url 'generacion' %}"><p id="paranav" > generación</p></a>
               </li> 
+              {% endif %}
               <!-- <li class="nav-item">
                 <a class="nav-link" href="vida_saludable_form"><p id="paranav" >Rutina por Vida Saludable</p></a>
               </li> -->
