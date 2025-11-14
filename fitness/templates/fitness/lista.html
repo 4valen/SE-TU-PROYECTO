@@ -1,0 +1,76 @@
+{% extends 'fitness/layout.html' %}
+{% load static %}
+
+{% block content %}
+<h1 class="my-4">Hola clientes de tu proyecto fitness</h1> <br>
+
+<div class="container">
+    <br>
+    <p>Como somos un proyecto pequeño y comprometido con nuestra clientela.</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>RUT</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Peso</th> 
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in datos %}
+            <tr>
+                <td>{{ x.rut }}</td>
+                <td>{{ x.nombre }}</td>
+                <td>{{ x.email }}</td>
+                <td>{{ x.peso }}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{% url 'lista_action' pk=x.rut action='edit' %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{% url 'lista_action' pk=x.rut action='delete' %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if action == 'delete' %}
+        <h2 class="my-4">¿Estás seguro de que deseas eliminar este elemento?</h2>
+        <p>{{ objeto }}</p>
+        <form method="post" class="mb-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirmar</button>
+            <a href="{% url 'lista' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    {% elif action == 'edit' %}
+        <h2 class="my-4">Editar Datos</h2>
+        <form method="post" class="mb-3">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ objeto.nombre }}">
+            </div>
+            <div class="form-group">
+                <label for="peso">Peso corporal (números sin decimales):</label>
+                <input type="number" id="peso" name="peso" class="form-control" value="{{ objeto.peso }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </form>
+    {% elif action == 'add' %}
+        <h2 class="my-4">Agregar Datos</h2>
+        <form method="post" class="mb-3">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="peso">Peso corporal (números sin decimales):</label>
+                <input type="number" id="peso" name="peso" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Datos</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

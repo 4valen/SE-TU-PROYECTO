@@ -1,0 +1,169 @@
+{% extends 'fitness/layout.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'fitness/estilos.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="row">
+        <div class="col-12">
+            <h1 class="admin-title"><i class="fas fa-tachometer-alt"></i> Panel de Administración Principal</h1>
+        </div>
+    </div>
+
+    <!-- Mensajes -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Lista de Usuarios Recientes -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card admin-users-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="fas fa-clock"></i> Usuarios Recientes</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover admin-users-table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Perfil</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in usuarios_recientes %}
+                                <tr>
+                                    <td>{{ usuario.username }}</td>
+                                    <td>
+                                        {% if usuario.datos %}
+                                            {{ usuario.datos.nombre }} {{ usuario.datos.apellido_paterno }}
+                                        {% else %}
+                                            <span class="text-muted">Sin perfil</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ usuario.email|default:"No especificado" }}</td>
+                                    <td>
+                                        {% if usuario.datos %}
+                                            <span class="badge bg-{% if usuario.datos.perfil == 'Estudiante' %}info{% else %}warning{% endif %}">
+                                                {{ usuario.datos.perfil }}
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">No definido</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if usuario.datos and usuario.datos.activo == 1 %}
+                                            <span class="badge bg-success">Activo</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Inactivo</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm admin-actions-group">
+                                            {% if usuario.datos %}
+                                                <a href="{% url 'lista_action' pk=usuario.datos.rut action='edit' %}" class="btn btn-outline-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="#" class="btn btn-outline-info">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">No hay usuarios registrados</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Acciones Rápidas -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card admin-actions-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="fas fa-bolt"></i> Acciones Rápidas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2 d-md-flex admin-actions-buttons">
+                        <!-- <a href="{% url 'gestion_usuarios' %}" class="btn btn-warning btn-lg me-2">
+                            <i class="fas fa-users-cog"></i> Gestionar Usuarios
+                        </a> -->
+                        <a href="{% url 'lista' %}" class="btn btn-info btn-lg me-2">
+                            <i class="fas fa-list"></i> Ver Todos los Datos
+                        </a>
+                        <a href="{% url 'consejos' %}" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-arrow-left"></i> Volver a Consejos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div><!-- Estadísticas - VERSIÓN CORREGIDA -->
+    <div class="row mt-4 stats-row">
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card text-white bg-primary admin-stats-card">
+                <div class="card-body text-center">
+                    <h2 class="card-title">{{ total_usuarios }}</h2>
+                    <p class="card-text">Usuarios Totales</p>
+                    <small><i class="fas fa-users"></i> Registrados en el sistema</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card text-white bg-success admin-stats-card">
+                <div class="card-body text-center">
+                    <h2 class="card-title">{{ usuarios_activos }}</h2>
+                    <p class="card-text">Usuarios Activos</p>
+                    <small><i class="fas fa-user-check"></i> Cuentas activas</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card text-white bg-info admin-stats-card">
+                <div class="card-body text-center">
+                    <h2 class="card-title">{{ total_datos }}</h2>
+                    <p class="card-text">Perfiles Completos</p>
+                    <small><i class="fas fa-id-card"></i> Con datos fitness</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card text-white bg-warning admin-stats-card">
+                <div class="card-body text-center">
+                    <h2 class="card-title">{{ usuarios_inactivos }}</h2>
+                    <p class="card-text">Usuarios Inactivos</p>
+                    <small><i class="fas fa-user-slash"></i> Cuentas desactivadas</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    </div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Fitness</title>
+    <link rel="stylesheet" href="{% static 'fitness/estilos.css' %}">
+    
+    <!-- FAVICON (para la pestaña del navegador) -->
+    <link rel="icon" href="{% static 'fitness/logo.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'fitness/logo.ico' %}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extra_head %}{% endblock %}
+
+</head>
+<body>
+    
+    <div id="contenido">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #006D83;">
+
+        <div class="container-fluid" >
+  
+          
+  
+          <div class="collapse navbar-collapse" id="navbarNav" >
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active"  href="{% url 'index' %}" > <p id="paranav">Inicio</p></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                  </li>
+  
+              <!-- <li class="nav-item">
+                <a class="nav-link active"  href="categoria"  > <p id="paranav">Categoria</p></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              </li> -->
+  
+                <a class="nav-link active" aria-current="page" href="Registro"> <p id="paranav" >Registro</p></a>
+              </li>
+             
+              <li class="nav-item">
+                <a class="nav-link" href="login"><p id="paranav" >Login</p></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="lista"><p id="paranav" >Administracion</p></a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="consejos"><p id="paranav" >Sugerencias y consejos</p></a>
+              </li>
+              {% endif %}
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="generacion"><p id="paranav" > generación</p></a>
+              </li> -->
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="vida_saludable_form"><p id="paranav" >Rutina por Vida Saludable</p></a>
+              </li> -->
+  
+             
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    {% block content %} {% endblock %}
+
+    <footer>2024 Gina de Fitnes se tuproyecto, tu mejor versión</footer>
+  
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+  
+    
+</body>
+</html>

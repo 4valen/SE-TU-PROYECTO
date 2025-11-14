@@ -1,0 +1,94 @@
+{% extends 'fitness/layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Mostrar mensajes de éxito/error -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-triangle{% endif %} me-2"></i>
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Banner de bienvenida para usuarios logueados -->
+    {% if request.user.is_authenticated %}
+    {% with user_data=request.user.datos_set.first %}
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <i class="fas fa-check-circle fa-2x me-3"></i>
+        <div>
+            <h4 class="alert-heading mb-1">¡Bienvenido de vuelta, {% if user_data %}{{ user_data.nombre }}{% else %}{{ request.user.username }}{% endif %}!</h4>
+            <p class="mb-0">Has iniciado sesión correctamente. Aquí tienes tus consejos personalizados.</p>
+        </div>
+    </div>
+    {% endwith %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold text-primary mb-4">
+                {% if request.user.is_authenticated %}
+                    Consejos Personalizados para Ti
+                {% else %}
+                    Consejos de Fitness
+                {% endif %}
+            </h1>
+            
+            <!-- Contenido de consejos -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">💪 Rutina de Ejercicios</h3>
+                    <p class="card-text">
+                        {% if request.user.is_authenticated %}
+                        Basado en tu perfil, te recomendamos ejercicios de fuerza 3 veces por semana...
+                        {% else %}
+                        Descubre los mejores ejercicios para alcanzar tus objetivos...
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar para usuarios logueados -->
+        <div class="col-lg-4">
+            {% if request.user.is_authenticated %}
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Tu Perfil</h5>
+                </div>
+                <div class="card-body">
+                    {% with user_data=request.user.datos_set.first %}
+                    <p><strong>Usuario:</strong> {{ request.user.username }}</p>
+                    <p><strong>Nombre:</strong> {% if user_data %}{{ user_data.nombre }}{% else %}No disponible{% endif %}</p>
+                    {% endwith %}
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">
+                            Ir a Mi Dashboard
+                        </a>
+                        <a href="{% url 'logout' %}" class="btn btn-outline-danger">
+                            Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>¿No tienes cuenta?</h5>
+                    <p>Regístrate para obtener consejos personalizados</p>
+                    <a href="{% url 'Registro' %}" class="btn btn-primary">Crear Cuenta</a>
+                    <hr>
+                    <p class="small text-muted">¿Ya tienes cuenta?</p>
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary">Iniciar Sesión</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

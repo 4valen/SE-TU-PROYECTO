@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Registro</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-header text-center">
+                        <h2>Registrarse</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="registerForm" action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" name="username" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password1">Password:</label>
+                                <input type="password" id="password1" name="password1" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password2">Confirm Password:</label>
+                                <input type="password" id="password2" name="password2" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <br>
+                            <a href="{% url 'index' %}" class="btn btn-secondary">Volver</a>                       
+                        </form>
+                    </div>
+
+                    <div id="mensaje">
+                        {% if mensaje %}
+                        {{ mensaje }}
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#registerForm").on("submit", function(event) {
+                var isValid = true;
+
+                 // Limpiar errores previos
+                $(".error").remove();
+
+                // Validar username
+                var username = $("#username").val();
+                if (username.trim() === "") {
+                    isValid = false;
+                    $("#username").after('<span class="error text-danger">Ingrese un usuario valido.</span>');
+                }
+
+                // Validar email
+                var email = $("#email").val();
+                var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (email.trim() === "") {
+                    isValid = false;
+                    $("#email").after('<span class="error text-danger">Ingrese un email valido.</span>');
+                } else if (!emailPattern.test(email)) {
+                    isValid = false;
+                    $("#email").after('<span class="error text-danger">Formato de email incorrecto.</span>');
+                }
+
+                // Validar password
+                var password1 = $("#password1").val();
+                if (password1.trim() === "") {
+                    isValid = false;
+                    $("#password1").after('<span class="error text-danger">Ingrese una contraseña valida.</span>');
+                } else if (password1.length < 4) {
+                    isValid = false;
+                    $("#password1").after('<span class="error text-danger">La contraseña debe tener un minimo de 4 caracteres.</span>');
+                }
+
+                // Validar confirm password
+                var password2 = $("#password2").val();
+                if (password2.trim() === "") {
+                    isValid = false;
+                    $("#password2").after('<span class="error text-danger">Favor confirmar contraseña.</span>');
+                } else if (password1 !== password2) {
+                    isValid = false;
+                    $("#password2").after('<span class="error text-danger">Las contraseñas no coinciden.</span>');
+                }
+
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>

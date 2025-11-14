@@ -1,0 +1,18 @@
+{% extends 'fitness/layout.html' %}
+{%load static %}
+<!DOCTYPE html>
+<html>
+    {% block content %}
+<head>
+    <title>Vida Saludable Form</title>
+</head>
+<body>
+    <h2>Vida Saludable Form</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+{% endblock  %}
