@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-  {% if request.user.is_authenticated %}
+  <!-- {% if request.user.is_authenticated %}
         {% with user_data=request.user.datos_set.first %}
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <i class="fas fa-check-circle fa-2x me-3"></i>
@@ -12,10 +12,9 @@
             </div>
         </div>
         {% endwith %}
-    {% endif %}
-<div class="container mt-4">
+    {% endif %} -->
 
-    <!-- Mensajes -->
+       <!-- Mensajes -->
     {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
@@ -26,6 +25,9 @@
         {% endfor %}
     {% endif %}
 
+<div class="container mt-4">
+
+ 
     <!-- Bienvenida -->
   
 
@@ -62,23 +64,72 @@
 
                 <!-- TARJETA 1 -->
                 <div class="col">
-                    <div class="card h-100">
-                        <img src="{% static 'fitness/img/alimento_sano.jpg' %}" class="card-img-top" alt="Consejo 1">
+                    <div class="card h-100 shadow-lg border-0" style="border-radius: 15px;">
+                        <img src="{% static 'fitness/img/alimento_sano.jpg' %}" class="card-img-top" alt="Consejo 1" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                         <div class="card-body text-center">
-                            <h3 class="card-title">Rutinas</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-                            <button class="btn btn-success" onclick="mostrarAlerta()">Más información</button>
-                            <a href="https://youtu.be/sPa3iT3cetQ" target="_blank" class="btn btn-primary">Ver más</a>
+                            <h3 class="card-title fw-bold text-success">plan de alimentación</h3>
+                            <p class="text-muted">Plan de alimentación diseñado para mejorar tu energía y rendimiento.</p>
+
+                            <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#infoGymModal">
+                                Ver más
+                            </button>
                         </div>
                     </div>
-                </div>
+</div>
+            <!-- modal -->
+            <div class="modal fade" id="infoGymModal" tabindex="-1" aria-labelledby="infoGymLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content" style="border-radius: 15px;">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title fw-bold" id="infoGymLabel">Plan de Alimentación Fitness</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body p-4">
+
+                            <h4 class="fw-bold text-success">🥗 Desayuno</h4>
+                            <ul>
+                                <li>Revuelto con <strong>3 huevos</strong> + <strong>½ taza de arroz</strong></li>
+                                <li>O <strong>50 g de avena</strong> con agua</li>
+                            </ul>
+
+                            <h4 class="fw-bold text-success mt-3">🍎 Merienda 1</h4>
+                            <p>Porción de frutas mediana</p>
+
+                            <h4 class="fw-bold text-success mt-3">🍛 Almuerzo</h4>
+                            <ul>
+                                <li>1 filete pequeño de <strong>pescado o pollo (80–100 g)</strong></li>
+                                <li><strong>½ taza</strong> de arroz o quinoa</li>
+                            </ul>
+
+                            <h4 class="fw-bold text-success mt-3">🥜 Merienda 2</h4>
+                            <p>1 puñado de frutos secos <strong>o</strong> batido de proteína</p>
+
+                            <h4 class="fw-bold text-success mt-3">🍽 Cena</h4>
+                            <ul>
+                                <li>1 filete pequeño de <strong>pescado o pollo (80–100 g)</strong></li>
+                                <li>Con pepino o espárragos</li>
+                            </ul>
+
+                            <h4 class="fw-bold text-success mt-4">📅 Fin de Semana</h4>
+                            <p>Misma rutina que durante la semana.</p>
+
+                        </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                 <!-- TARJETA 2 -->
                 <div class="col">
                     <div class="card h-100">
                         <img src="{% static 'fitness/img/imagechico.jpg' %}" class="card-img-top" alt="Consejo 2">
                         <div class="card-body text-center">
-                            <h3 class="card-title">Rutinas</h3>
+                            <h3 class="card-title">Rutinas Generales</h3>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
                             <button class="btn btn-success" onclick="mostrarAlerta()">Más información</button>
                             <a href="https://youtu.be/YZkfj1JOG6g" target="_blank" class="btn btn-primary">Ver más</a>
