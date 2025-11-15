@@ -34,7 +34,7 @@
     <!-- Título -->
     <h1 class="display-5 fw-bold text-primary mb-4 text-center">
         {% if request.user.is_authenticated %}
-            Consejos y Rutinas Personalizadas
+            plan de alimentación 
         {% else %}
             Consejos de Fitness y Rutinas
         {% endif %}
@@ -48,10 +48,10 @@
             <!-- Tarjeta intro -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
-                    <h3 class="card-title">💪 Rutina de Ejercicios</h3>
+                    <h3 class="card-title">💪 Rutinas para mantenerte saludable</h3>
                     <p class="card-text">
                         {% if request.user.is_authenticated %}
-                            Basado en tu perfil, te recomendamos ejercicios de fuerza 3 veces por semana...
+                            Te recomendamos una buena alimentación e hidratacion asi como mantenerte activo...
                         {% else %}
                             Descubre los mejores ejercicios para alcanzar tus objetivos...
                         {% endif %}
@@ -130,20 +130,90 @@
                         <img src="{% static 'fitness/img/imagechico.jpg' %}" class="card-img-top" alt="Consejo 2">
                         <div class="card-body text-center">
                             <h3 class="card-title">Rutinas Generales</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+                            <p></p>
                             <button class="btn btn-success" onclick="mostrarAlerta()">Más información</button>
-                            <a href="https://youtu.be/YZkfj1JOG6g" target="_blank" class="btn btn-primary">Ver más</a>
+                            <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#infoGymModal2">
+                                Ver más
+                            </button>
                         </div>
                     </div>
                 </div>
 
+
+            <!-- modal2 -->
+            <div class="modal fade" id="infoGymModal2" tabindex="-1" aria-labelledby="infoGymLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content" style="border-radius: 15px;">
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title fw-bold" id="infoGymLabel2">Rutinas Generales de Ejercicio</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div> 
+                         <div class="modal-body p-4">
+
+                            <h4 class="fw-bold text-success" style="display: flex; justify-content:center ;"> sentadillas</h4>
+                                 <div style="width: 50%;; min-width: 0;"> 
+                                    <li>SENTADILLA: GUÍA PASO A PASO <strong>sentadillas</strong> + <strong> sigue al avatar</strong></li>
+                                    <li> Fase 1: Preparación (¡Configúrate!) <strong>Pecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
+                                    <li>Mirada al frente, no al suelo.</li>
+                                    <li> Fase 2: Ejecución (¡Baja!) <strong>Inhala</strong> mientras doblas las caderas y las rodillas para bajar el cuerpo.</li>
+                                    <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
+                                    <li> Fase 3: Finalización (¡Sube!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
+                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
+                                </ul>
+                                </div>
+                         
+                         <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-330px);">
+                            <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
+                                <source src="{% static 'fitness/img/sentadilla.mp4' %}" type="video/mp4">
+                                Tu navegador no soporta videos HTML5.
+                            </video>
+                        </div>
+                         <h4 class="fw-bold text-success" style="display: flex; justify-content:center ; transform: translateY(-30px);"> trotadillas</h4>
+                          <div style="width: 40%; min-width: 0;"> 
+                                    <li>SENTADILLA DEL REY: GUÍA PASO A PASO <strong>sentadillas en trote</strong> + <strong> sigue al avatar</strong></li>
+                                    <li> Fase 1: Preparación (¡Configúrate!) <strong>Pecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
+                                    <li>Mirada al frente, no al suelo.</li>
+                                    <li> Fase 2: Ejecución (¡Baja!) <strong>Inhala</strong> mientras doblas las caderas y las rodillas para bajar el cuerpo.</li>
+                                    <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
+                                    <li> Fase 3: Finalización (¡levanta un pie y luego baja y levanta el otro!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
+                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
+                                </ul>
+                            </div>
+                             <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-330px);">
+                            <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
+                                <source src="{% static 'fitness/img/trotadillas.mp4' %}" type="video/mp4">
+                                Tu navegador no soporta videos HTML5.
+                            </video>
+                        </div>
+                        <h4 class="fw-bold text-success" style="display: flex; justify-content:center ; transform: translateY(-30px);"> trotar</h4>
+                          <div style="width: 40%; min-width: 0;"> 
+                                    <li>trotar: GUÍA PASO A PASO <strong>preparesepara estar en trote</strong> + <strong> sigue al avatar</strong></li>
+                                    <li> Fase 1: Preparación (¡Configúrate!) <strong>pie derecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
+                                    <li>Mirada al frente, no al suelo.</li>
+                                    <li> Fase 2: Ejecución (¡Baja el pie que subiste y sube el otro!) <strong>Inhala</strong> mientras doblas las rodillas .</li>
+                                    <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
+                                    <li> Fase 3: Finalización (¡levanta un pie y luego baja y levanta el otro!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
+                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
+                                </ul>
+                            </div>
+                            <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-330px);">
+                            <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
+                                <source src="{% static 'fitness/img/trotar.mp4' %}" type="video/mp4">
+                                Tu navegador no soporta videos HTML5.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+</div>
                 <!-- TARJETA 3 -->
                 <div class="col">
                     <div class="card h-100">
                         <img src="{% static 'fitness/img/rubia.jpg' %}" class="card-img-top" alt="Consejo 3">
                         <div class="card-body text-center">
-                            <h3 class="card-title">Resultados</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+                            <h3 class="card-title">Progreso</h3>
+                            <p></p>
                             <button class="btn btn-success" onclick="mostrarAlerta()">Más información</button>
                             <a href="https://youtu.be/YZkfj1JOG6g" target="_blank" class="btn btn-primary">Ver más</a>
                         </div>
@@ -172,7 +242,7 @@
                     <p><strong>Nombre:</strong> {{ user_data.nombre|default:"No disponible" }}</p>
                     {% endwith %}
                     <div class="d-grid gap-2 mt-3">
-                        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">Ir a Mi Dashboard</a>
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">Inicio</a>
                         <a href="{% url 'logout' %}" class="btn btn-outline-danger">Cerrar Sesión</a>
                     </div>
                 </div>
