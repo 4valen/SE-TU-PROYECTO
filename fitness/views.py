@@ -49,9 +49,13 @@ def categoria(request):
     context = {}
     return render(request, 'fitness/categoria.html', context)
 @login_required
+@login_required
 def consejos(request):
-    context = {}
-    return render(request, 'fitness/consejos.html', context)
+    datos = Datos.objects.filter(user=request.user).first()  # traer solo los datos del usuario logueado
+    
+    return render(request, 'fitness/consejos.html', {
+        'x': datos
+    })
 @login_required
 def generacion(request):
     context = {}
@@ -77,7 +81,17 @@ def generacion_view(request):
         else:
             return JsonResponse({'error': 'Fecha de nacimiento no proporcionada'}, status=400)
     return render(request, 'fitness/generacion.html')
-
+def mi_perfil(request):
+    if request.user.is_authenticated:
+        try:
+            # Obtener los datos del usuario logeado
+            usuario = Datos.objects.get(user=request.user)
+            return render(request, 'consejos.html', {'x': usuario})
+        except Datos.DoesNotExist:
+            # Si no existe el perfil Datos para este usuario
+            return render(request, 'consejos.html', {'error': 'Perfil no encontrado'})
+    else:
+        return redirect('login')
 def login(request):
     
     if request.method == 'POST':

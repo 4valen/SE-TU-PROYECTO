@@ -179,7 +179,7 @@
                                     <li>Mantén el core comprometido durante todo el movimiento.</li>
                                 </ul>
                             </div>
-                             <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-330px);">
+                             <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-430px);">
                             <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
                                 <source src="{% static 'fitness/img/trotadillas.mp4' %}" type="video/mp4">
                                 Tu navegador no soporta videos HTML5.
@@ -196,7 +196,7 @@
                                     <li>Mantén el core comprometido durante todo el movimiento.</li>
                                 </ul>
                             </div>
-                            <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-330px);">
+                            <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-450px);">
                             <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
                                 <source src="{% static 'fitness/img/trotar.mp4' %}" type="video/mp4">
                                 Tu navegador no soporta videos HTML5.
@@ -205,29 +205,71 @@
                     </div>
                 </div>
 
-            </div>
-</div>
+                </div>
+                </div>
                 <!-- TARJETA 3 -->
                 <div class="col">
                     <div class="card h-100">
                         <img src="{% static 'fitness/img/rubia.jpg' %}" class="card-img-top" alt="Consejo 3">
                         <div class="card-body text-center">
-                            <h3 class="card-title">Progreso</h3>
+                            <h3 class="card-title">información</h3>
                             <p></p>
-                            <button class="btn btn-success" onclick="mostrarAlerta()">Más información</button>
-                            <a href="https://youtu.be/YZkfj1JOG6g" target="_blank" class="btn btn-primary">Ver más</a>
+                            <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#infoGymModal3">
+                                Ver más
+                            </button>
                         </div>
+                    </div>
+                </div>
+                 <!-- modal3 -->
+            <div class="modal fade" id="infoGymModal3" tabindex="-1" aria-labelledby="infoGymLabel3" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content" style="border-radius: 15px;">
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title fw-bold" id="infoGymLabel2">informacion </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div> 
+                         <div class="modal-body p-4">
+
+                            <div>
+                <h4 class="fw-bold text-success" style="display: flex; justify-content:center ;">perfil de  {{ user_data.nombre|default:request.user.username }}!</h4>
+              
+            </div>
+                            
+                                 <!-- <div style="width: 50%;; min-width: 0;"> 
+                                    <li>Peso <strong>{{ x.peso }}  kg</strong></li>
+                                    <li>altura <strong></strong> </li>
+                                    <li>Meta</li>
+                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
+                                </ul>
+                                </div> -->
+                                <p>Nombre: {{ x.nombre }}</p>
+                                <p>Peso: {{ x.peso }}</p>
+                                
+                                
+                                <!-- Fin Debug -->
+                         <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-150px);">
+                            
+                    <img src="{% static 'fitness/img/avatar.png' %}" 
+                        alt="Avatar del usuario" 
+                        class="avatar-img"
+                        width="420" height="450">
+               
+                        </div>
+                        
                     </div>
                 </div>
 
             </div>
+</div>
 
-            <!-- Botón volver -->
-            <div class="text-center mt-4">
-                <button type="button" href="{% url 'index' %}"  class="btn btn-secondary">Volver</button>
             </div>
 
+            
+
         </div>
+
+
+
 
         <!-- SIDEBAR DERECHA -->
         <div class="col-lg-4">
@@ -261,6 +303,8 @@
             {% endif %}
         </div>
 
+
+        
     </div>
 </div>
 
