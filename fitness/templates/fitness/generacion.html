@@ -11,105 +11,177 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{% static 'fitness/estilos.css' %}">
     <style>
-        .body-type-image {
-            width: 100%;
-            max-width: 300px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 3px solid #0dcaf0;
-        }
-        .image-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .image-caption {
-            font-style: italic;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-        .btn-with-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .btn-icon {
-            width: 20px;
-            height: 20px;
-        }
-        .routine-section {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #0dcaf0;
-        }
-        .exercise-card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .exercise-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .exercise-name {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        .exercise-sets {
-            background: #0dcaf0;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-        }
-        .download-btn {
-            background: linear-gradient(135deg, #0dcaf0, #0da2c2);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(13, 202, 240, 0.3);
-        }
-        .day-tab {
-            cursor: pointer;
-            padding: 10px 20px;
-            border-radius: 20px;
-            margin: 5px;
-            background: #e9ecef;
-            border: none;
-            transition: all 0.3s ease;
-        }
-        .day-tab.active {
-            background: #0dcaf0;
-            color: white;
-        }
-        .training-day {
-            display: none;
-        }
-        .training-day.active {
-            display: block;
-        }
-    </style>
+    /* --- Ajustes generales de Texto --- */
+    h1 {
+        font-size: 1.8rem; /* Mucho más pequeño que el original */
+        color: #2c3e50;
+        font-weight: 700;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 1.1rem; /* Tamaño sutil para subtítulos */
+        color: #6c757d;
+        text-align: center;
+        font-weight: 400;
+        margin-bottom: 20px;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+    
+    h5 {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    p, li {
+        font-size: 0.95rem; /* Texto del cuerpo ligeramente más compacto */
+        line-height: 1.5;
+    }
+
+    /* --- Estilos de Imágenes --- */
+    .body-type-image {
+        width: 100%;
+        max-width: 250px; /* Reducido un poco el tamaño máximo */
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin: 10px 0;
+        border: 3px solid #0dcaf0;
+    }
+
+    .image-container {
+        text-align: center;
+        margin: 15px 0;
+    }
+
+    .image-caption {
+        font-size: 0.85rem; /* Texto pie de foto más pequeño */
+        font-style: italic;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+
+    /* --- Botones --- */
+    .btn-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 0.9rem; /* Letra del botón más pequeña */
+        padding: 8px 16px;
+    }
+
+    .btn-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* --- Sección de Rutina --- */
+    .routine-section {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px; /* Menos padding */
+        margin: 15px 0;
+        border-left: 4px solid #0dcaf0;
+    }
+
+    .exercise-card {
+        background: white;
+        border-radius: 8px;
+        padding: 12px; /* Tarjetas más compactas */
+        margin: 8px 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .exercise-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .exercise-name {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 0.95rem; /* Nombre del ejercicio ajustado */
+    }
+
+    .exercise-sets {
+        background: #0dcaf0;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.75rem; /* Etiqueta de series pequeña y limpia */
+        font-weight: bold;
+    }
+
+    .download-btn {
+        background: linear-gradient(135deg, #0dcaf0, #0da2c2);
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(13, 202, 240, 0.3);
+    }
+
+    /* --- Pestañas --- */
+    .day-tab {
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 20px;
+        margin: 4px;
+        font-size: 0.9rem;
+        background: #e9ecef;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .day-tab.active {
+        background: #0dcaf0;
+        color: white;
+    }
+
+    .training-day {
+        display: none;
+    }
+
+    .training-day.active {
+        display: block;
+    }
+
+    /* Ajuste para el título del Modal */
+    .modal-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
     <form id="miFormulario" method="post" action="{% url 'generacion' %}">
         {% csrf_token %}
     </form>
 
-    <h2>Selecciona tu rutina según tu tipo de cuerpo</h2>
+    <h1>Selecciona tu rutina según tu tipo de cuerpo</h1>
+    <h2>Aqui una imagen de referencia</h>
+        <img src="fitness/static/fitness/img/tip.png" 
+           
+         alt="Texto alternativo" 
+         width="300" 
+         height="200"> 
+
     
     <!-- Botones con tooltips e iconos -->
     <div class="d-flex gap-3 flex-wrap mb-4">
@@ -117,7 +189,7 @@
                 data-bs-toggle="modal" data-bs-target="#modalEctomorfo"
                 data-bs-toggle="tooltip" data-bs-placement="top" 
                 title="Delgado, metabolismo rápido, dificultad para ganar peso">
-            <img src="{% static '/home/dito/Documentos/Setuproyecto-master/Imagenes/ectomorfo.png' %}" alt="Ectomorfo" class="btn-icon" onerror="this.style.display='none'">
+            <img src="{% static 'fitness/static/fitness/img/ectomorfo.png' %}" alt="Ectomorfo" class="btn-icon" onerror="this.style.display='none'">
             Ectomorfo
         </button>
         
@@ -125,7 +197,7 @@
                 data-bs-toggle="modal" data-bs-target="#modalMesomorfo"
                 data-bs-toggle="tooltip" data-bs-placement="top" 
                 title="Complexión atlética, facilidad para ganar músculo">
-            <img src="{% static '/home/dito/Documentos/Setuproyecto-master/Imagenes/mesomorfo.png' %}" alt="Mesomorfo" class="btn-icon" onerror="this.style.display='none'">
+            <img src="{% static 'fitness/static/fitness/img/mesomorfo.png' %}" alt="Mesomorfo" class="btn-icon" onerror="this.style.display='none'">
             Mesomorfo
         </button>
         
@@ -133,7 +205,7 @@
                 data-bs-toggle="modal" data-bs-target="#modalEndomorfo"
                 data-bs-toggle="tooltip" data-bs-placement="top" 
                 title="Complexión redondeada, metabolismo lento, facilidad para ganar peso">
-            <img src="{% static '/home/dito/Documentos/Setuproyecto-master/Imagenes/endomorfo.png' %}" alt="Endomorfo" class="btn-icon" onerror="this.style.display='none'">
+            <img src="{% static 'fitness/static/fitness/img/endomorfo.png' %}" alt="Endomorfo" class="btn-icon" onerror="this.style.display='none'">
             Endomorfo
         </button>
     </div>
@@ -176,10 +248,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="image-container">
-                        <img src="{% static '/home/dito/Documentos/Setuproyecto-master/Imagenes/ectomorfo.png' %}" 
-                             alt="Tipo de cuerpo Ectomorfo" 
-                             class="body-type-image"
-                             >
+                        <img src="{% static 'fitness/img/dieta_para_ectomorfo-2690867088.jpg' %}" 
+                            alt="Tipo de cuerpo Ectomorfo" 
+                            class="body-type-image"> 
                         <div class="image-caption">Complexión delgada y estilizada</div>
                     </div>
                     
@@ -296,10 +367,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="image-container">
-                        <img src="{% static '/home/dito/Documentos/Setuproyecto-master/Imagenes/endomorfo.png' %}" 
-                             alt="Tipo de cuerpo Endomorfo" 
-                             class="body-type-image"
-                             >
+                        <img src="{% static 'fitness/static/fitness/img/dieta_para_ectomorfo-2690867088.jpg' %}" 
+                                alt="Dieta para Ectomorfo" 
+                                class="body-type-image">
                         <div class="image-caption">Complexión más redondeada</div>
                     </div>
                     
