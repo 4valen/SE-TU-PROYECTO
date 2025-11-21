@@ -2,35 +2,18 @@
 {% load static %}
 
 {% block content %}
-  <!-- {% if request.user.is_authenticated %}
-        {% with user_data=request.user.datos_set.first %}
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <i class="fas fa-check-circle fa-2x me-3"></i>
-            <div>
-                <h4 class="alert-heading mb-1">¡Bienvenido de vuelta, {{ user_data.nombre|default:request.user.username }}!</h4>
-                <p class="mb-0">Aquí tienes tus consejos y rutinas personalizadas.</p>
-            </div>
-        </div>
-        {% endwith %}
-    {% endif %} -->
-
-       <!-- Mensajes -->
-    {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-            <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-triangle{% endif %} me-2"></i>
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        {% endfor %}
-    {% endif %}
+<!-- Mensajes -->
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-triangle{% endif %} me-2"></i>
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+{% endif %}
 
 <div class="container mt-4">
-
- 
-    <!-- Bienvenida -->
-  
-
     <!-- Título -->
     <h1 class="display-5 fw-bold text-primary mb-4 text-center">
         {% if request.user.is_authenticated %}
@@ -41,10 +24,8 @@
     </h1>
 
     <div class="row">
-
         <!-- CONTENIDO PRINCIPAL -->
         <div class="col-lg-8">
-
             <!-- Tarjeta intro -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
@@ -61,7 +42,6 @@
 
             <!-- SECCIÓN DE TARJETAS -->
             <div class="row row-cols-1 g-4">
-
                 <!-- TARJETA 1 -->
                 <div class="col">
                     <div class="card h-100 shadow-lg border-0" style="border-radius: 15px;">
@@ -69,60 +49,12 @@
                         <div class="card-body text-center">
                             <h3 class="card-title fw-bold text-success">plan de alimentación</h3>
                             <p class="text-muted">Plan de alimentación diseñado para mejorar tu energía y rendimiento.</p>
-
                             <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#infoGymModal">
                                 Ver más
                             </button>
                         </div>
                     </div>
-</div>
-            <!-- modal -->
-            <div class="modal fade" id="infoGymModal" tabindex="-1" aria-labelledby="infoGymLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content" style="border-radius: 15px;">
-                        <div class="modal-header bg-success text-white">
-                            <h5 class="modal-title fw-bold" id="infoGymLabel">Plan de Alimentación Fitness</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <div class="modal-body p-4">
-
-                            <h4 class="fw-bold text-success">🥗 Desayuno</h4>
-                            <ul>
-                                <li>Revuelto con <strong>3 huevos</strong> + <strong>½ taza de arroz</strong></li>
-                                <li>O <strong>50 g de avena</strong> con agua</li>
-                            </ul>
-
-                            <h4 class="fw-bold text-success mt-3">🍎 Merienda 1</h4>
-                            <p>Porción de frutas mediana</p>
-
-                            <h4 class="fw-bold text-success mt-3">🍛 Almuerzo</h4>
-                            <ul>
-                                <li>1 filete pequeño de <strong>pescado o pollo (80–100 g)</strong></li>
-                                <li><strong>½ taza</strong> de arroz o quinoa</li>
-                            </ul>
-
-                            <h4 class="fw-bold text-success mt-3">🥜 Merienda 2</h4>
-                            <p>1 puñado de frutos secos <strong>o</strong> batido de proteína</p>
-
-                            <h4 class="fw-bold text-success mt-3">🍽 Cena</h4>
-                            <ul>
-                                <li>1 filete pequeño de <strong>pescado o pollo (80–100 g)</strong></li>
-                                <li>Con pepino o espárragos</li>
-                            </ul>
-
-                            <h4 class="fw-bold text-success mt-4">📅 Fin de Semana</h4>
-                            <p>Misma rutina que durante la semana.</p>
-
-                        </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+                </div>
 
                 <!-- TARJETA 2 -->
                 <div class="col">
@@ -131,7 +63,6 @@
                         <div class="card-body text-center">
                             <h3 class="card-title">Rutinas Generales</h3>
                             <p></p>
-                            <button class="btn btn-success" onclick="mostrarAlerta()">Más información</button>
                             <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#infoGymModal2">
                                 Ver más
                             </button>
@@ -139,137 +70,21 @@
                     </div>
                 </div>
 
-
-            <!-- modal2 -->
-            <div class="modal fade" id="infoGymModal2" tabindex="-1" aria-labelledby="infoGymLabel2" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content" style="border-radius: 15px;">
-                            <div class="modal-header bg-success text-white">
-                                <h5 class="modal-title fw-bold" id="infoGymLabel2">Rutinas Generales de Ejercicio</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                            </div> 
-                         <div class="modal-body p-4">
-
-                            <h4 class="fw-bold text-success" style="display: flex; justify-content:center ;"> sentadillas</h4>
-                                 <div style="width: 50%;; min-width: 0;"> 
-                                    <li>SENTADILLA: GUÍA PASO A PASO <strong>sentadillas</strong> + <strong> sigue al avatar</strong></li>
-                                    <li> Fase 1: Preparación (¡Configúrate!) <strong>Pecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
-                                    <li>Mirada al frente, no al suelo.</li>
-                                    <li> Fase 2: Ejecución (¡Baja!) <strong>Inhala</strong> mientras doblas las caderas y las rodillas para bajar el cuerpo.</li>
-                                    <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
-                                    <li> Fase 3: Finalización (¡Sube!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
-                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
-                                </ul>
-                                </div>
-                         
-                         <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-330px);">
-                            <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
-                                <source src="{% static 'fitness/img/sentadilla.mp4' %}" type="video/mp4">
-                                Tu navegador no soporta videos HTML5.
-                            </video>
-                        </div>
-                         <h4 class="fw-bold text-success" style="display: flex; justify-content:center ; transform: translateY(-30px);"> trotadillas</h4>
-                          <div style="width: 40%; min-width: 0;"> 
-                                    <li>SENTADILLA DEL REY: GUÍA PASO A PASO <strong>sentadillas en trote</strong> + <strong> sigue al avatar</strong></li>
-                                    <li> Fase 1: Preparación (¡Configúrate!) <strong>Pecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
-                                    <li>Mirada al frente, no al suelo.</li>
-                                    <li> Fase 2: Ejecución (¡Baja!) <strong>Inhala</strong> mientras doblas las caderas y las rodillas para bajar el cuerpo.</li>
-                                    <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
-                                    <li> Fase 3: Finalización (¡levanta un pie y luego baja y levanta el otro!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
-                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
-                                </ul>
-                            </div>
-                             <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-430px);">
-                            <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
-                                <source src="{% static 'fitness/img/trotadillas.mp4' %}" type="video/mp4">
-                                Tu navegador no soporta videos HTML5.
-                            </video>
-                        </div>
-                        <h4 class="fw-bold text-success" style="display: flex; justify-content:center ; transform: translateY(-30px);"> trotar</h4>
-                          <div style="width: 40%; min-width: 0;"> 
-                                    <li>trotar: GUÍA PASO A PASO <strong>preparesepara estar en trote</strong> + <strong> sigue al avatar</strong></li>
-                                    <li> Fase 1: Preparación (¡Configúrate!) <strong>pie derecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
-                                    <li>Mirada al frente, no al suelo.</li>
-                                    <li> Fase 2: Ejecución (¡Baja el pie que subiste y sube el otro!) <strong>Inhala</strong> mientras doblas las rodillas .</li>
-                                    <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
-                                    <li> Fase 3: Finalización (¡levanta un pie y luego baja y levanta el otro!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
-                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
-                                </ul>
-                            </div>
-                            <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-450px);">
-                            <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
-                                <source src="{% static 'fitness/img/trotar.mp4' %}" type="video/mp4">
-                                Tu navegador no soporta videos HTML5.
-                            </video>
-                        </div>
-                    </div>
-                </div>
-
-                </div>
-                </div>
-                <!-- TARJETA 3 -->
+                <!-- TARJETA 3 - CALCULADORA -->
                 <div class="col">
                     <div class="card h-100">
                         <img src="{% static 'fitness/img/rubia.jpg' %}" class="card-img-top" alt="Consejo 3">
                         <div class="card-body text-center">
-                            <h3 class="card-title">información</h3>
-                            <p></p>
+                            <h3 class="card-title">Calculadora de Progreso</h3>
+                            <p>Descubre tu progreso hacia el peso ideal</p>
                             <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#infoGymModal3">
                                 Ver más
                             </button>
                         </div>
                     </div>
                 </div>
-                 <!-- modal3 -->
-            <div class="modal fade" id="infoGymModal3" tabindex="-1" aria-labelledby="infoGymLabel3" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content" style="border-radius: 15px;">
-                            <div class="modal-header bg-success text-white">
-                                <h5 class="modal-title fw-bold" id="infoGymLabel2">informacion </h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                            </div> 
-                         <div class="modal-body p-4">
-
-                            <div>
-                <h4 class="fw-bold text-success" style="display: flex; justify-content:center ;">perfil de  {{ user_data.nombre|default:request.user.username }}!</h4>
-              
             </div>
-                            
-                                 <!-- <div style="width: 50%;; min-width: 0;"> 
-                                    <li>Peso <strong>{{ x.peso }}  kg</strong></li>
-                                    <li>altura <strong></strong> </li>
-                                    <li>Meta</li>
-                                    <li>Mantén el core comprometido durante todo el movimiento.</li>
-                                </ul>
-                                </div> -->
-                                <p>Nombre: {{ x.nombre }}</p>
-                                <p>Peso: {{ x.peso }}</p>
-                                
-                                
-                                <!-- Fin Debug -->
-                         <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-150px);">
-                            
-                    <img src="{% static 'fitness/img/avatar.png' %}" 
-                        alt="Avatar del usuario" 
-                        class="avatar-img"
-                        width="420" height="450">
-               
-                        </div>
-                        
-                    </div>
-                </div>
-
-            </div>
-</div>
-
-            </div>
-
-            
-
         </div>
-
-
-
 
         <!-- SIDEBAR DERECHA -->
         <div class="col-lg-4">
@@ -302,18 +117,327 @@
             </div>
             {% endif %}
         </div>
-
-
-        
     </div>
 </div>
 
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function mostrarAlerta() {
-        Swal.fire("Al presionar ver más, este enlace te llevará a YouTube");
-    }
-</script>
+<!-- MODAL 1 - PLAN ALIMENTACIÓN -->
+<div class="modal fade" id="infoGymModal" tabindex="-1" aria-labelledby="infoGymLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 15px;">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title fw-bold" id="infoGymLabel">Plan de Alimentación Fitness</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <h4 class="fw-bold text-success">🥗 Desayuno</h4>
+                <ul>
+                    <li>Revuelto con <strong>3 huevos</strong> + <strong>½ taza de arroz</strong></li>
+                    <li>O <strong>50 g de avena</strong> con agua</li>
+                </ul>
+                <h4 class="fw-bold text-success mt-3">🍎 Merienda 1</h4>
+                <p>Porción de frutas mediana</p>
+                <h4 class="fw-bold text-success mt-3">🍛 Almuerzo</h4>
+                <ul>
+                    <li>1 filete pequeño de <strong>pescado o pollo (80–100 g)</strong></li>
+                    <li><strong>½ taza</strong> de arroz o quinoa</li>
+                </ul>
+                <h4 class="fw-bold text-success mt-3">🥜 Merienda 2</h4>
+                <p>1 puñado de frutos secos <strong>o</strong> batido de proteína</p>
+                <h4 class="fw-bold text-success mt-3">🍽 Cena</h4>
+                <ul>
+                    <li>1 filete pequeño de <strong>pescado o pollo (80–100 g)</strong></li>
+                    <li>Con pepino o espárragos</li>
+                </ul>
+                <h4 class="fw-bold text-success mt-4">📅 Fin de Semana</h4>
+                <p>Misma rutina que durante la semana.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- modal2 -->
+<div class="modal fade" id="infoGymModal2" tabindex="-1" aria-labelledby="infoGymLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 15px;">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title fw-bold" id="infoGymLabel2">Rutinas Generales de Ejercicio</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div> 
+            <div class="modal-body p-4">
+
+                <h4 class="fw-bold text-success" style="display: flex; justify-content:center ;"> sentadillas</h4>
+                <div style="width: 50%;; min-width: 0;"> 
+                    <ul>
+                        <li>SENTADILLA: GUÍA PASO A PASO <strong>sentadillas</strong> + <strong> sigue al avatar</strong></li>
+                        <li> Fase 1: Preparación (¡Configúrate!) <strong>Pecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
+                        <li>Mirada al frente, no al suelo.</li>
+                        <li> Fase 2: Ejecución (¡Baja!) <strong>Inhala</strong> mientras doblas las caderas y las rodillas para bajar el cuerpo.</li>
+                        <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
+                        <li> Fase 3: Finalización (¡Sube!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
+                        <li>Mantén el core comprometido durante todo el movimiento.</li>
+                    </ul>
+                </div>
+             
+                <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-330px);">
+                    <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
+                        <source src="{% static 'fitness/img/sentadilla.mp4' %}" type="video/mp4">
+                        Tu navegador no soporta videos HTML5.
+                    </video>
+                </div>
+                
+                <h4 class="fw-bold text-success" style="display: flex; justify-content:center ; transform: translateY(-30px);"> trotadillas</h4>
+                <div style="width: 40%; min-width: 0;"> 
+                    <ul>
+                        <li>SENTADILLA DEL REY: GUÍA PASO A PASO <strong>sentadillas en trote</strong> + <strong> sigue al avatar</strong></li>
+                        <li> Fase 1: Preparación (¡Configúrate!) <strong>Pecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
+                        <li>Mirada al frente, no al suelo.</li>
+                        <li> Fase 2: Ejecución (¡Baja!) <strong>Inhala</strong> mientras doblas las caderas y las rodillas para bajar el cuerpo.</li>
+                        <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
+                        <li> Fase 3: Finalización (¡levanta un pie y luego baja y levanta el otro!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
+                        <li>Mantén el core comprometido durante todo el movimiento.</li>
+                    </ul>
+                </div>
+                
+                <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-430px);">
+                    <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
+                        <source src="{% static 'fitness/img/trotadillas.mp4' %}" type="video/mp4">
+                        Tu navegador no soporta videos HTML5.
+                    </video>
+                </div>
+                
+                <h4 class="fw-bold text-success" style="display: flex; justify-content:center ; transform: translateY(-30px);"> trotar</h4>
+                <div style="width: 40%; min-width: 0;"> 
+                    <ul>
+                        <li>trotar: GUÍA PASO A PASO <strong>preparesepara estar en trote</strong> + <strong> sigue al avatar</strong></li>
+                        <li> Fase 1: Preparación (¡Configúrate!) <strong>pie derecho arriba, orgulloso. Espalda neutral (ni arqueada ni redonda).</strong> con pausa</li>
+                        <li>Mirada al frente, no al suelo.</li>
+                        <li> Fase 2: Ejecución (¡Baja el pie que subiste y sube el otro!) <strong>Inhala</strong> mientras doblas las rodillas .</li>
+                        <li>Mantén el peso en los talones y asegúrate de que las rodillas no sobrepasen los dedos de los pies.</li>
+                        <li> Fase 3: Finalización (¡levanta un pie y luego baja y levanta el otro!) <strong>Exhala</strong> mientras empujas a través de los talones para volver a la posición inicial.</li>
+                        <li>Mantén el core comprometido durante todo el movimiento.</li>
+                    </ul>
+                </div>
+                
+                <div class="avatar-container" style="display: flex; justify-content: flex-end; align-items: flex-start; transform: translateY(-450px);">
+                    <video class="avatar-video"  width="350" height="350" autoplay loop muted playsinline>
+                        <source src="{% static 'fitness/img/trotar.mp4' %}" type="video/mp4">
+                        Tu navegador no soporta videos HTML5.
+                    </video>
+                </div>
+                
+            </div> 
+        </div> 
+    </div> 
+</div>
+
+<!-- MODAL 3 - CALCULADORA -->
+<div class="modal fade" id="infoGymModal3" tabindex="-1" aria-labelledby="infoGymLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 15px;">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title fw-bold" id="infoGymLabel3">
+                    Calculadora de Progreso - {{ x.nombre|default:request.user.username }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div> 
+            <div class="modal-body p-4">
+                <!-- Información del usuario -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title fw-bold text-success">Tu Información</h6>
+                                <p class="mb-1"><strong>Nombre:</strong> {{ x.nombre }} {{ x.apellido_paterno }}</p>
+                                <p class="mb-1"><strong>Peso actual:</strong> {{ x.peso }} kg</p>
+                                <p class="mb-1"><strong>Altura:</strong> {{ x.altura }} m</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title fw-bold text-success">Calculadora</h6>
+                                <p class="mb-1"><strong>Peso Ideal:</strong> <span id="peso_ideal_calc">-</span> kg</p>
+                                <p class="mb-1"><strong>Progreso:</strong> <span id="progreso_calc">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de cálculo -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="peso_actual" class="form-label fw-bold">Peso Actual (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="peso_actual" 
+                                   value="{{ x.peso|default:'' }}" placeholder="Ej: 70.5">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="peso_meta" class="form-label fw-bold">Peso Meta (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="peso_meta" 
+                                   placeholder="Ej: 65.0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón calcular -->
+                <div class="text-center mb-4">
+                    <button type="button" class="btn btn-success px-5" onclick="calcularProgreso()">
+                        🧮 Calcular Mi Progreso
+                    </button>
+                </div>
+
+                <!-- Resultados -->
+                <div id="resultados" class="mt-4" style="display: none;">
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white fw-bold">
+                            📈 Resultados de Tu Progreso
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold text-success">Estadísticas</h6>
+                                    <p class="mb-2"><strong>Peso Ideal Calculado:</strong> 
+                                        <span id="peso_ideal" class="fw-bold">0</span> kg
+                                    </p>
+                                    <p class="mb-2"><strong>Diferencia con Ideal:</strong> 
+                                        <span id="diferencia_ideal" class="fw-bold">0</span> kg
+                                    </p>
+                                    <p class="mb-2"><strong>Kilos para Meta:</strong> 
+                                        <span id="kilos_restantes" class="fw-bold">0</span> kg
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold text-success">Progreso Visual</h6>
+                                    <div class="progress mb-2" style="height: 25px;">
+                                        <div class="progress-bar bg-success fw-bold" 
+                                             id="barra_progreso" 
+                                             style="width: 0%">
+                                            0%
+                                        </div>
+                                    </div>
+                                    <small class="text-muted" id="texto_progreso">Completa los datos para ver tu progreso</small>
+                                </div>
+                            </div>
+                            <!-- Mensaje motivacional -->
+                            <div id="mensaje_resultado" class="alert mt-3 mb-0"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Avatar -->
+                <div class="avatar-container text-center mt-4">
+                    <img src="{% static 'fitness/img/avatar.png' %}" 
+                         alt="Avatar del usuario" 
+                         class="avatar-img"
+                         width="200" height="220">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+function calcularProgreso() {
+    // Obtener valores
+    const pesoActual = parseFloat(document.getElementById('peso_actual').value) || 0;
+    const pesoMeta = parseFloat(document.getElementById('peso_meta').value) || 0;
+    const alturaUsuario = {% if x and x.altura %}{{ x.altura }}{% else %}0{% endif %};
+
+    // Validar datos
+    if (!pesoActual || !pesoMeta) {
+        alert('Por favor ingresa tanto el peso actual como el peso meta');
+        return;
+    }
+
+    // Calcular peso ideal
+    let pesoIdeal;
+    if (alturaUsuario > 0) {
+        pesoIdeal = (alturaUsuario * 100 - 100) * 0.9;
+    } else {
+        pesoIdeal = pesoMeta;
+    }
+
+    // Actualizar peso ideal en la tarjeta
+    document.getElementById('peso_ideal_calc').textContent = pesoIdeal.toFixed(1);
+
+    // Calcular diferencias
+    const diferenciaIdeal = pesoActual - pesoIdeal;
+    
+    // Calcular progreso hacia la meta
+    let progresoKilos, progresoPorcentaje;
+    if (pesoMeta < pesoActual) {
+        progresoKilos = pesoActual - pesoMeta;
+        progresoPorcentaje = Math.min(100, Math.max(0, ((pesoActual - progresoKilos - pesoMeta) / (pesoActual - pesoMeta)) * 100));
+    } else {
+        progresoKilos = 0;
+        progresoPorcentaje = 100;
+    }
+
+    const porcentajeSobreIdeal = diferenciaIdeal > 0 ? (diferenciaIdeal / pesoIdeal) * 100 : 0;
+
+    // Mostrar resultados
+    document.getElementById('peso_ideal').textContent = pesoIdeal.toFixed(1);
+    document.getElementById('diferencia_ideal').textContent = diferenciaIdeal.toFixed(1);
+    document.getElementById('kilos_restantes').textContent = progresoKilos.toFixed(1);
+    
+    // Barra de progreso
+    const barraProgreso = document.getElementById('barra_progreso');
+    barraProgreso.style.width = progresoPorcentaje + '%';
+    barraProgreso.textContent = progresoPorcentaje.toFixed(1) + '%';
+    
+    // Color de la barra según progreso
+    if (progresoPorcentaje >= 70) {
+        barraProgreso.className = 'progress-bar bg-success fw-bold';
+    } else if (progresoPorcentaje >= 40) {
+        barraProgreso.className = 'progress-bar bg-warning fw-bold';
+    } else {
+        barraProgreso.className = 'progress-bar bg-danger fw-bold';
+    }
+
+    // Texto descriptivo
+    document.getElementById('texto_progreso').textContent = 
+        progresoKilos > 0 ? 
+        `Te faltan ${progresoKilos.toFixed(1)} kg para llegar a tu meta de ${pesoMeta} kg` :
+        '¡Has alcanzado tu meta!';
+
+    // Actualizar progreso en tarjeta
+    document.getElementById('progreso_calc').textContent = progresoPorcentaje.toFixed(1) + '%';
+
+    // Mensaje motivacional
+    const mensajeDiv = document.getElementById('mensaje_resultado');
+    if (porcentajeSobreIdeal > 20) {
+        mensajeDiv.className = 'alert alert-danger mt-3 mb-0';
+        mensajeDiv.innerHTML = `<strong>💪 ¡Vamos! Estás un ${porcentajeSobreIdeal.toFixed(1)}% sobre tu peso ideal. Es momento de actuar.`;
+    } else if (porcentajeSobreIdeal > 0) {
+        mensajeDiv.className = 'alert alert-warning mt-3 mb-0';
+        mensajeDiv.innerHTML = `<strong>📝 Cerca del objetivo. Estás un ${porcentajeSobreIdeal.toFixed(1)}% sobre tu peso ideal. ¡Tú puedes!`;
+    } else if (progresoPorcentaje >= 100) {
+        mensajeDiv.className = 'alert alert-success mt-3 mb-0';
+        mensajeDiv.innerHTML = '<strong>🎉 ¡Felicidades! Has alcanzado tu peso ideal y tu meta. ¡Eres increíble!';
+    } else {
+        mensajeDiv.className = 'alert alert-info mt-3 mb-0';
+        mensajeDiv.innerHTML = '<strong>⭐ ¡Bien hecho! Estás en el camino correcto hacia tu peso ideal.';
+    }
+
+    // Mostrar sección de resultados
+    document.getElementById('resultados').style.display = 'block';
+}
+
+// Calcular automáticamente si ya hay datos
+document.addEventListener('DOMContentLoaded', function() {
+    const pesoActual = document.getElementById('peso_actual').value;
+    const pesoMeta = document.getElementById('peso_meta').value;
+    
+    if (pesoActual && pesoMeta) {
+        setTimeout(calcularProgreso, 500);
+    }
+});
+</script>
 {% endblock %}

@@ -56,6 +56,7 @@ def consejos(request):
     return render(request, 'fitness/consejos.html', {
         'x': datos
     })
+    
 @login_required
 def generacion(request):
     context = {}
@@ -145,6 +146,7 @@ def Registro(request):
             id_genero = request.POST.get('id_genero')
             telefono = request.POST.get('telefono')
             peso = request.POST.get('peso')
+            altura = request.POST.get('altura')
             email = request.POST.get('email')
             direccion = request.POST.get('direccion')
             username = request.POST.get('username')
@@ -193,6 +195,7 @@ def Registro(request):
                 id_genero_id=id_genero,
                 telefono=telefono,
                 peso=peso,
+                altura=altura,
                 email=email,
                 direccion=direccion,
                 perfil=perfil,
@@ -327,6 +330,7 @@ def lista(request, pk=None, action=None):
             if request.method == 'POST':
                 objeto.nombre = request.POST.get('nombre')
                 objeto.peso = request.POST.get('peso')
+                
                 objeto.save()
                 return redirect('lista')
             context = {

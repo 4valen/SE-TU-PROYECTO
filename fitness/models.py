@@ -39,6 +39,7 @@ class Datos(models.Model):
     id_genero = models.ForeignKey('Genero', on_delete=models.CASCADE, db_column='idGenero')  
     telefono = models.CharField(max_length=45)
     peso = models.FloatField()
+    altura = models.DecimalField(max_digits=3, decimal_places=2)
     email = models.EmailField(unique=True, max_length=100, blank=True, null=True)
     direccion = models.CharField(max_length=50, blank=True, null=True)  
     perfil = models.CharField(max_length=15, choices=PERFIL_CHOICES, default='estudiante', null=True, blank=True)
