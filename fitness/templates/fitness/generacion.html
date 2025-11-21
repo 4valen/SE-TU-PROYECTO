@@ -1,675 +1,332 @@
 {% extends 'fitness/layout.html' %}
 {% load static %}
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title class="titleG"> Perfil </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/            azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="{% static 'fitness/estilos.css' %}">
-    <style>
-    /* --- Ajustes generales de Texto --- */
-    h1 {
-        font-size: 1.8rem; /* Mucho más pequeño que el original */
-        color: #2c3e50;
-        font-weight: 700;
-        text-align: center;
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
 
-    h2 {
-        font-size: 1.1rem; /* Tamaño sutil para subtítulos */
-        color: #6c757d;
-        text-align: center;
-        font-weight: 400;
-        margin-bottom: 20px;
-    }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="{% static 'fitness/estilos.css' %}">
 
-    h4 {
-        font-size: 1.3rem;
-        font-weight: 600;
-    }
+ <style>
+
+/* --- Ajustes generales de Texto --- */
+h1 { font-size: 1.8rem; color: #2c3e50; font-weight: 700; text-align: center; margin-top: 20px; margin-bottom: 10px; }
+h2 { font-size: 1.1rem; color: #6c757d; text-align: center; font-weight: 400; margin-bottom: 20px; }
+h4 { font-size: 1.3rem; font-weight: 600; }
+h5 { font-size: 1.1rem; font-weight: 600; }
+p, li { font-size: 0.95rem; line-height: 1.5; }
+
+
+/* --- Estilos de Imágenes --- */
+.body-type-image { width: 100%; max-width: 250px; height: 180px; object-fit: cover; border-radius: 8px; margin: 10px 0; border: 3px solid #0dcaf0; }
+.image-container { text-align: center; margin: 15px 0; }
+.image-caption { font-size: 0.85rem; font-style: italic; color: #6c757d; margin-top: 5px; }
+
+
+/* --- Botones --- */
+.btn-with-icon { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; padding: 8px 16px; }
+.btn-icon { width: 18px; height: 18px; }
+
+/* --- Sección de Rutina --- */
+.routine-section { background-color: #f8f9fa; border-radius: 10px; padding: 15px; margin: 15px 0; border-left: 4px solid #0dcaf0; }
+.exercise-card { background: white; border-radius: 8px; padding: 12px; margin: 8px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.exercise-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.exercise-name { font-weight: 600; color: #2c3e50; font-size: 0.95rem; }
+.exercise-sets { background: #0dcaf0; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; }
+.download-btn { background: linear-gradient(135deg, #0dcaf0, #0da2c2); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-weight: bold; font-size: 0.9rem; transition: all 0.3s ease; }
+.download-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(13, 202, 240, 0.3); }
+
+
+/* --- Pestañas --- */
+.day-tab { cursor: pointer; padding: 8px 16px; border-radius: 20px; margin: 4px; font-size: 0.9rem; background: #e9ecef; border: none; transition: all 0.3s ease; }
+.day-tab.active { background: #0dcaf0; color: white; }
+.training-day { display: none; }
+.training-day.active { display: block; }
+.modal-title { font-size: 1.2rem; font-weight: bold; }
+</style> 
+
+<form id="miFormulario" method="post" action="{% url 'generacion' %}">
+    {% csrf_token %}
+</form>
+
+<h1>Selecciona tu rutina según tu tipo de cuerpo</h1>
+<h2>Aquí una imagen de referencia</h2>
+
+<img src="{% static 'fitness/img/tip.png' %}" 
+     alt="Referencia Tipos de Cuerpo" 
+     class="img-fluid d-block mx-auto mb-4"
+     width="300" 
+     height="200"> 
+
+<div class="d-flex gap-3 flex-wrap mb-4 justify-content-center">
+    <button type="button" class="btn btn-info btn-with-icon" 
+            data-bs-toggle="modal" data-bs-target="#modalEctomorfo">
+        <img src="{% static 'fitness/img/boton.png' %}" class="btn-icon">
+        Ectomorfo
+    </button>
     
-    h5 {
-        font-size: 1.1rem;
-        font-weight: 600;
-    }
-
-    p, li {
-        font-size: 0.95rem; /* Texto del cuerpo ligeramente más compacto */
-        line-height: 1.5;
-    }
-
-    /* --- Estilos de Imágenes --- */
-    .body-type-image {
-        width: 100%;
-        max-width: 250px; /* Reducido un poco el tamaño máximo */
-        height: 180px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin: 10px 0;
-        border: 3px solid #0dcaf0;
-    }
-
-    .image-container {
-        text-align: center;
-        margin: 15px 0;
-    }
-
-    .image-caption {
-        font-size: 0.85rem; /* Texto pie de foto más pequeño */
-        font-style: italic;
-        color: #6c757d;
-        margin-top: 5px;
-    }
-
-    /* --- Botones --- */
-    .btn-with-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        font-size: 0.9rem; /* Letra del botón más pequeña */
-        padding: 8px 16px;
-    }
-
-    .btn-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    /* --- Sección de Rutina --- */
-    .routine-section {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 15px; /* Menos padding */
-        margin: 15px 0;
-        border-left: 4px solid #0dcaf0;
-    }
-
-    .exercise-card {
-        background: white;
-        border-radius: 8px;
-        padding: 12px; /* Tarjetas más compactas */
-        margin: 8px 0;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .exercise-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 5px;
-    }
-
-    .exercise-name {
-        font-weight: 600;
-        color: #2c3e50;
-        font-size: 0.95rem; /* Nombre del ejercicio ajustado */
-    }
-
-    .exercise-sets {
-        background: #0dcaf0;
-        color: white;
-        padding: 2px 8px;
-        border-radius: 10px;
-        font-size: 0.75rem; /* Etiqueta de series pequeña y limpia */
-        font-weight: bold;
-    }
-
-    .download-btn {
-        background: linear-gradient(135deg, #0dcaf0, #0da2c2);
-        color: white;
-        border: none;
-        padding: 8px 20px;
-        border-radius: 25px;
-        font-weight: bold;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-    }
-
-    .download-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(13, 202, 240, 0.3);
-    }
-
-    /* --- Pestañas --- */
-    .day-tab {
-        cursor: pointer;
-        padding: 8px 16px;
-        border-radius: 20px;
-        margin: 4px;
-        font-size: 0.9rem;
-        background: #e9ecef;
-        border: none;
-        transition: all 0.3s ease;
-    }
-
-    .day-tab.active {
-        background: #0dcaf0;
-        color: white;
-    }
-
-    .training-day {
-        display: none;
-    }
-
-    .training-day.active {
-        display: block;
-    }
-
-    /* Ajuste para el título del Modal */
-    .modal-title {
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-</style>
-</head>
-<body>
-    <form id="miFormulario" method="post" action="{% url 'generacion' %}">
-        {% csrf_token %}
-    </form>
-
-    <h1>Selecciona tu rutina según tu tipo de cuerpo</h1>
-    <h2>Aqui una imagen de referencia</h>
-        <img src="fitness/static/fitness/img/tip.png" 
-           
-         alt="Texto alternativo" 
-         width="300" 
-         height="200"> 
-
+    <button type="button" class="btn btn-info btn-with-icon" 
+            data-bs-toggle="modal" data-bs-target="#modalMesomorfo">
+        <img src="{% static 'fitness/img/boton.png' %}" class="btn-icon">
+        Mesomorfo
+    </button>
     
-    <!-- Botones con tooltips e iconos -->
-    <div class="d-flex gap-3 flex-wrap mb-4">
-        <button type="button" id="bt1" class="btn btn-info btn-with-icon" 
-                data-bs-toggle="modal" data-bs-target="#modalEctomorfo"
-                data-bs-toggle="tooltip" data-bs-placement="top" 
-                title="Delgado, metabolismo rápido, dificultad para ganar peso">
-            <img src="{% static 'fitness/static/fitness/img/ectomorfo.png' %}" alt="Ectomorfo" class="btn-icon" onerror="this.style.display='none'">
-            Ectomorfo
-        </button>
-        
-        <button type="button" id="bt2" class="btn btn-info btn-with-icon" 
-                data-bs-toggle="modal" data-bs-target="#modalMesomorfo"
-                data-bs-toggle="tooltip" data-bs-placement="top" 
-                title="Complexión atlética, facilidad para ganar músculo">
-            <img src="{% static 'fitness/static/fitness/img/mesomorfo.png' %}" alt="Mesomorfo" class="btn-icon" onerror="this.style.display='none'">
-            Mesomorfo
-        </button>
-        
-        <button type="button" id="bt3" class="btn btn-info btn-with-icon" 
-                data-bs-toggle="modal" data-bs-target="#modalEndomorfo"
-                data-bs-toggle="tooltip" data-bs-placement="top" 
-                title="Complexión redondeada, metabolismo lento, facilidad para ganar peso">
-            <img src="{% static 'fitness/static/fitness/img/endomorfo.png' %}" alt="Endomorfo" class="btn-icon" onerror="this.style.display='none'">
-            Endomorfo
-        </button>
-    </div>
+    <button type="button" class="btn btn-info btn-with-icon" 
+            data-bs-toggle="modal" data-bs-target="#modalEndomorfo">
+        <img src="{% static 'fitness/img/boton.png' %}" class="btn-icon">
+        Endomorfo
+    </button>
+</div>
 
-    <!-- Sección para mostrar la rutina generada -->
-    <div id="rutinaContainer" class="mt-4" style="display: none;">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h4 id="routineTitle" class="mb-0">Tu Rutina Personalizada</h4>
-            </div>
-            <div class="card-body">
-                <div id="routineContent">
-                    <!-- Aquí se cargará la rutina dinámicamente -->
-                </div>
-                <div class="text-center mt-3">
-                    <button id="downloadRoutine" class="download-btn">
-                        📥 Descargar Rutina
-                    </button>
-                </div>
+<div id="rutinaContainer" class="mt-4" style="display: none;">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 id="routineTitle" class="mb-0">Tu Rutina Personalizada</h4>
+        </div>
+        <div class="card-body">
+            <div id="routineContent"></div>
+            <div class="text-center mt-3">
+                <button id="downloadRoutine" class="download-btn btn btn-success">📥 Descargar Rutina</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="mensajeGeneracion" class="mt-3"></div>
-
-    <!-- Modal Ectomorfo -->
-    <div class="modal fade" id="modalEctomorfo" tabindex="-1" aria-labelledby="modalEctomorfoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalEctomorfoLabel">
-                        Tipo Ectomorfo
-                        <span class="badge bg-info ms-2" 
-                              data-bs-toggle="tooltip" data-bs-placement="right" 
-                              title="Aproximadamente 10-15% de la población">
-                            i
-                        </span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="modalEctomorfo" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tipo Ectomorfo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="image-container">
+                    <img src="{% static 'fitness/img/dieta_para_ectomorfo-2690867088.jpg' %}" class="body-type-image"> 
+                    <div class="image-caption">Complexión delgada y estilizada</div>
                 </div>
-                <div class="modal-body">
-                    <div class="image-container">
-                        <img src="{% static 'fitness/img/dieta_para_ectomorfo-2690867088.jpg' %}" 
-                            alt="Tipo de cuerpo Ectomorfo" 
-                            class="body-type-image"> 
-                        <div class="image-caption">Complexión delgada y estilizada</div>
-                    </div>
-                    
-                    <h4>¡Hola! Eres de tipo Ectomorfo</h4>
-                    <p>Características principales:</p>
-                    <ul>
-                        <li>Complexión delgada y estilizada</li>
-                        <li>Hombros estrechos</li>
-                        <li>Metabolismo rápido</li>
-                        <li>Dificultad para ganar peso y masa muscular</li>
-                    </ul>
-                    
-                    <div class="mt-4">
-                        <h6>💪 Entrenamiento recomendado:</h6>
-                        <ul>
-                            <li>Enfoque en ejercicios compuestos</li>
-                            <li>Menos cardio, más fuerza</li>
-                            <li>Sesiones cortas e intensas</li>
-                            <li>Descanso adecuado entre entrenamientos</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <h6>🍽️ Nutrición:</h6>
-                        <ul>
-                            <li>Alta en calorías y proteínas</li>
-                            <li>Consumir cada 2-3 horas</li>
-                            <li>Suplementos como batidos de proteína</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="generarRutina('ectomorfo')">Generar Rutina</button>
-                </div>
+                <h4>¡Hola! Eres de tipo Ectomorfo</h4>
+                <p>Características: Dificultad para ganar peso, metabolismo rápido.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="generarRutina('ectomorfo')">Generar Rutina</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal Mesomorfo -->
-    <div class="modal fade" id="modalMesomorfo" tabindex="-1" aria-labelledby="modalMesomorfoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalMesomorfoLabel">
-                        Tipo Mesomorfo
-                        <span class="badge bg-info ms-2" 
-                              data-bs-toggle="tooltip" data-bs-placement="right" 
-                              title="Aproximadamente 20-30% de la población">
-                            i
-                        </span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="modalMesomorfo" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tipo Mesomorfo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="image-container">
+                    <img src="{% static 'fitness/img/Cuerpo Mesomorfo.png' %}" class="body-type-image">
+                    <div class="image-caption">Complexión atlética</div>
                 </div>
-                <div class="modal-body">
-                    <div class="image-container">
-                        <img src="{% static '/home/dito/Documentos/Setuproyecto-master/Imagenes/mesomorfo.png' %}" 
-                             alt="Tipo de cuerpo Mesomorfo" 
-                             class="body-type-image"
-                             >
-                        <div class="image-caption">Complexión atlética y musculosa</div>
-                    </div>
-                    
-                    <h4>¡Hola! Eres de tipo Mesomorfo</h4>
-                    <p>Características principales:</p>
-                    <ul>
-                        <li>Complexión atlética y musculosa</li>
-                        <li>Hombros anchos y cintura estrecha</li>
-                        <li>Metabolismo eficiente</li>
-                        <li>Facilidad para ganar y perder peso</li>
-                    </ul>
-                    
-                    <div class="mt-4">
-                        <h6>💪 Entrenamiento recomendado:</h6>
-                        <ul>
-                            <li>Balance entre fuerza y cardio</li>
-                            <li>Entrenamiento por grupos musculares</li>
-                            <li>Variedad de ejercicios</li>
-                            <li>Entrenamiento en circuito</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <h6>🍽️ Nutrición:</h6>
-                        <ul>
-                            <li>Dieta balanceada en macronutrientes</li>
-                            <li>Proteína moderada-alta</li>
-                            <li>Hidratos complejos</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="generarRutina('mesomorfo')">Generar Rutina</button>
-                </div>
+                <h4>¡Hola! Eres de tipo Mesomorfo</h4>
+                <p>Características: Facilidad para ganar músculo, cuerpo atlético.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="generarRutina('mesomorfo')">Generar Rutina</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal Endomorfo -->
-    <div class="modal fade" id="modalEndomorfo" tabindex="-1" aria-labelledby="modalEndomorfoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalEndomorfoLabel">
-                        Tipo Endomorfo
-                        <span class="badge bg-info ms-2" 
-                              data-bs-toggle="tooltip" data-bs-placement="right" 
-                              title="Aproximadamente 50-60% de la población">
-                            i
-                        </span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="modalEndomorfo" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tipo Endomorfo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="image-container">
+                    <img src="{% static 'fitness/img/Persona-cuerpo-endomorfo.jpg' %}" class="body-type-image">
+                    <div class="image-caption">Complexión redondeada</div>
                 </div>
-                <div class="modal-body">
-                    <div class="image-container">
-                        <img src="{% static 'fitness/static/fitness/img/dieta_para_ectomorfo-2690867088.jpg' %}" 
-                                alt="Dieta para Ectomorfo" 
-                                class="body-type-image">
-                        <div class="image-caption">Complexión más redondeada</div>
-                    </div>
-                    
-                    <h4>¡Hola! Eres de tipo Endomorfo</h4>
-                    <p>Características principales:</p>
-                    <ul>
-                        <li>Complexión más redondeada</li>
-                        <li>Hombros y caderas anchas</li>
-                        <li>Metabolismo más lento</li>
-                        <li>Facilidad para ganar peso y grasa</li>
-                    </ul>
-                    
-                    <div class="mt-4">
-                        <h6>💪 Entrenamiento recomendado:</h6>
-                        <ul>
-                            <li>Alto volumen de cardio</li>
-                            <li>Entrenamiento de fuerza completo</li>
-                            <li>Ejercicios de alta intensidad (HIIT)</li>
-                            <li>Actividad física constante</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <h6>🍽️ Nutrición:</h6>
-                        <ul>
-                            <li>Control calórico estricto</li>
-                            <li>Alta en proteínas y fibra</li>
-                            <li>Baja en carbohidratos simples</li>
-                            <li>Comidas frecuentes en porciones pequeñas</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="generarRutina('endomorfo')">Generar Rutina</button>
-                </div>
+                <h4>¡Hola! Eres de tipo Endomorfo</h4>
+                <p>Características: Facilidad para ganar peso, metabolismo lento.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="generarRutina('endomorfo')">Generar Rutina</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Script para inicializar los tooltips y manejar rutinas -->
-    <script>
-        // Inicializar todos los tooltips
-        document.addEventListener('DOMContentLoaded', function() {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-
-            // Configurar evento de descarga
-            document.getElementById('downloadRoutine').addEventListener('click', function() {
-                const rutinaTitle = document.getElementById('routineTitle').textContent;
-                const rutinaContent = document.getElementById('routineContent').textContent;
+<script>
+    // DATOS DE LAS RUTINAS CON VIDEOS
+    // Aquí es donde defines qué video sale en cada ejercicio
+    const rutinas = {
+        ectomorfo: {
+            titulo: "Rutina Ectomorfo - Ganar Masa",
+            descripcion: "Rutina de volumen con descansos largos.",
+            frecuencia: "4 días por semana",
+            dias: [
+                {
+                    nombre: "Día 1: Pecho y Tríceps",
+                    ejercicios: [
+                        { 
+                            nombre: "Press de Banca", 
+                            series: "4 Series x 8 Reps", 
+                            desc: "Acuéstate en el banco. Baja la barra hasta tocar el pecho medio y sube explosivamente. Mantén los codos a 45 grados.",
+                            video: "https://www.youtube.com/embed/TAH8RxOS0VI?si=h0e0lK5qIQtxVTeu" 
+                        },
+                        { 
+                            nombre: "Press Inclinado con Mancuernas", 
+                            series: "3 Series x 10 Reps", 
+                            desc: "Banco inclinado a 30°. Sube las mancuernas juntándolas arriba sin chocarlas.",
+                            video: "https://www.youtube.com/embed/8iPEnn-ltC8" 
+                        },
+                        { 
+                            nombre: "Aperturas", 
+                            series: "3 Series x 12 Reps", 
+                            desc: "Abre los brazos como si fueras a abrazar un árbol grande. Siente el estiramiento en el pecho.",
+                            video: "https://www.youtube.com/embed/eozdVDA78K0" 
+                        },
+                        { 
+                            nombre: "Fondos (Dips)", 
+                            series: "3 Series x 10 Reps",
+                            desc: "Baja el cuerpo doblando los codos hasta 90 grados. Inclínate hacia adelante para enfocar el pecho.",
+                            video: "https://www.youtube.com/embed/2z8JmcrW-As"
+                        }
+                    ]
+                },
+                {
+                    nombre: "Día 2: Espalda y Bíceps",
+                    ejercicios: [
+                        { nombre: "Dominadas", series: "4 x 8", desc: "Sube hasta pasar la barbilla.", video: "https://www.youtube.com/embed/eGo4IYlbE5g" },
+                        { nombre: "Remo con Barra", series: "3 x 8", desc: "Espalda recta, tira la barra al ombligo.", video: "https://www.youtube.com/embed/9efgcAjQe7E" },
+                        { nombre: "Curl de Bíceps", series: "3 x 10", desc: "No muevas los codos del costado.", video: "https://www.youtube.com/embed/ykJmrZ5v0Oo" }
+                    ]
+                },
                 
-                const blob = new Blob([`${rutinaTitle}\n\n${rutinaContent}`], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'mi_rutina_fitness.txt';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                {
+                    nombre: "Día 3: Piernas",
+                    ejercicios: [
+                        { nombre: "Sentadillas", series: "4 x 8" },
+                        { nombre: "Prensa", series: "3 x 10" }
+                    ]
+                }
+            ]
+        },
+        mesomorfo: {
+            titulo: "Rutina Mesomorfo - Hipertrofia",
+            descripcion: "Intensidad moderada-alta.",
+            frecuencia: "5 días",
+            dias: [
+                {
+                    nombre: "Día 1: Pecho",
+                    ejercicios: [
+                        { nombre: "Press Banca", series: "4 x 6", video: "https://www.youtube.com/embed/vthMCtgGtFc" },
+                        { nombre: "Aperturas", series: "3 x 12" }
+                    ]
+                }
+                
+            ]
+        },
+        endomorfo: {
+            titulo: "Rutina Endomorfo - Quema Grasa",
+            descripcion: "Alto ritmo cardíaco.",
+            frecuencia: "5 días",
+            dias: [
+                {
+                    nombre: "Día 1: Circuito",
+                    ejercicios: [
+                        { nombre: "Burpees", series: "3 x 15", desc: "Pecho al suelo y salto.", video: "https://www.youtube.com/embed/auBLPXO8Fww" },
+                        { nombre: "Sentadillas", series: "4 x 15" }
+                    ]
+                }
+                
+            ]
+        }
+    };
+
+    function generarRutina(tipoCuerpo) {
+        const rutina = rutinas[tipoCuerpo];
+        const container = document.getElementById('rutinaContainer');
+        const content = document.getElementById('routineContent');
+
+        // Cerrar modal
+        const modalElement = document.getElementById('modal' + tipoCuerpo.charAt(0).toUpperCase() + tipoCuerpo.slice(1));
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if(modal) modal.hide();
+
+        document.getElementById('routineTitle').textContent = rutina.titulo;
+
+        let html = `
+            <div class="routine-section">
+                <h5>📋 Descripción General</h5>
+                <p>${rutinas[tipoCuerpo].descripcion}</p>
+                <p><strong>Frecuencia:</strong> ${rutinas[tipoCuerpo].frecuencia}</p>
+            </div>
+            
+            <div class="mb-3 d-flex flex-wrap">`;
+            
+        rutina.dias.forEach((dia, index) => {
+            html += `<button class="day-tab ${index===0?'active':''}" onclick="cambiarDia(${index})">${dia.nombre.split(':')[0]}</button>`;
+        });
+        
+        html += `</div>`;
+
+        rutina.dias.forEach((dia, index) => {
+            html += `<div class="training-day ${index===0?'active':''}" id="day${index}">
+                <h5 class="text-primary mb-3">${dia.nombre}</h5>
+                <div class="row">`;
+            
+            dia.ejercicios.forEach(ej => {
+                // Aquí verificamos si hay video
+                const tieneVideo = ej.video ? true : false;
+                const descripcion = ej.desc ? ej.desc : "Realiza el ejercicio con técnica cuidada.";
+                
+                html += `
+                <div class="col-md-6">
+                    <div class="exercise-card">
+                        <div class="exercise-header">
+                            <span class="exercise-name">${ej.nombre}</span>
+                            <span class="exercise-sets">${ej.series}</span>
+                        </div>
+                        
+                        <details>
+                            <summary>🎥 Ver cómo se hace</summary>
+                            <div class="mt-2">
+                                <p class="video-desc">${descripcion}</p>
+                                ${tieneVideo ? `
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="${ej.video}" allowfullscreen style="border-radius:6px;"></iframe>
+                                </div>` : '<p class="text-muted small">Video no disponible</p>'}
+                            </div>
+                        </details>
+                        
+                    </div>
+                </div>`;
             });
+            html += `</div></div>`;
         });
 
-        // Datos de rutinas para cada tipo de cuerpo
-        const rutinas = {
-            ectomorfo: {
-                titulo: "Rutina Ectomorfo - Ganar Masa Muscular",
-                descripcion: "Enfocada en ejercicios compuestos con alto volumen para estimular el crecimiento muscular.",
-                frecuencia: "4 días por semana",
-                dias: [
-                    {
-                        nombre: "Día 1: Pecho y Tríceps",
-                        ejercicios: [
-                            { nombre: "Press de Banca", series: "4 Series x 8 Repeticiones" },
-                            { nombre: "Press Inclinado con Mancuernas", series: "3 Series x10" },
-                            { nombre: "Aperturas con Mancuernas", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Fondos en Paralelas", series: "3 Series x10" },
-                            { nombre: "Extensión de Tríceps en Polea", series: "3 Series x 12 Repeticiones" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 2: Espalda y Bíceps",
-                        ejercicios: [
-                            { nombre: "Dominadas o Jalón al Pecho", series: "4 Series x8" },
-                            { nombre: "Remo con Barra", series: "3 Series x8" },
-                            { nombre: "Remo con Mancuerna", series: "3 Series x10" },
-                            { nombre: "Curl de Bíceps con Barra", series: "3 Series x10" },
-                            { nombre: "Curl Martillo", series: "3 Series x12" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 3: Piernas",
-                        ejercicios: [
-                            { nombre: "Sentadillas", series: "4 Series x8" },
-                            { nombre: "Prensa de Piernas", series: "3 Series x10" },
-                            { nombre: "Extensiones de Cuádriceps", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Curl de Femoral", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Elevación de Talones", series: "4 Series x15" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 4: Hombros y Abdominales",
-                        ejercicios: [
-                            { nombre: "Press Militar", series: "4 Series x8" },
-                            { nombre: "Elevaciones Laterales", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Face Pull", series: "3 Series x15" },
-                            { nombre: "Encogimientos de Hombros", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Crunch Abdominal", series: "3 Series x15" }
-                        ]
-                    }
-                ]
-            },
-            mesomorfo: {
-                titulo: "Rutina Mesomorfo - Definición y Fuerza",
-                descripcion: "Balance perfecto entre fuerza y volumen, aprovechando tu genética atlética.",
-                frecuencia: "5 días por semana",
-                dias: [
-                    {
-                        nombre: "Día 1: Pecho",
-                        ejercicios: [
-                            { nombre: "Press de Banca", series: "4 Series x6" },
-                            { nombre: "Press Inclinado", series: "3 Series x8" },
-                            { nombre: "Cruces en Polea", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Flexiones", series: "3 Series x15" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 2: Espalda",
-                        ejercicios: [
-                            { nombre: "Peso Muerto", series: "4 Series x5" },
-                            { nombre: "Jalón al Pecho", series: "3 Series x8" },
-                            { nombre: "Remo con Barra T", series: "3 Series x10" },
-                            { nombre: "Face Pull", series: "3 Series x15" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 3: Piernas",
-                        ejercicios: [
-                            { nombre: "Sentadillas", series: "4 Series x6" },
-                            { nombre: "Prensa", series: "3 Series x10" },
-                            { nombre: "Extensiones", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Peso Muerto Rumano", series: "3 Series x8" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 4: Hombros",
-                        ejercicios: [
-                            { nombre: "Press Militar", series: "4 Series x6" },
-                            { nombre: "Elevaciones Laterales", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Elevaciones Frontales", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Encogimientos", series: "3 Series x 12 Repeticiones" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 5: Brazos y Abdominales",
-                        ejercicios: [
-                            { nombre: "Curl de Bíceps", series: "3 Series x8" },
-                            { nombre: "Extensión de Tríceps", series: "3 Series x8" },
-                            { nombre: "Martillo", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Plancha", series: "3 Series x60 seg" }
-                        ]
-                    }
-                ]
-            },
-            endomorfo: {
-                titulo: "Rutina Endomorfo - Pérdida de Grasa y Tonificación",
-                descripcion: "Combinación de entrenamiento de fuerza y cardio para maximizar la quema de grasa.",
-                frecuencia: "5-6 días por semana",
-                dias: [
-                    {
-                        nombre: "Día 1: Full Body + Cardio",
-                        ejercicios: [
-                            { nombre: "Sentadillas", series: "4 Series x 12 Repeticiones" },
-                            { nombre: "Press de Banca", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Remo con Barra", series: "3 Series x 12 Repeticiones" },
-                            { nombre: "Plancha", series: "3 Series x45 seg" },
-                            { nombre: "Cardio: 30 min", series: "Cinta o Bicicleta" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 2: HIIT + Abdominales",
-                        ejercicios: [
-                            { nombre: "Burpees", series: "4 Series x45 seg" },
-                            { nombre: "Mountain Climbers", series: "4 Series x45 seg" },
-                            { nombre: "Saltos de Cuerda", series: "4 Series x45 seg" },
-                            { nombre: "Crunch", series: "3 Series x20" },
-                            { nombre: "Elevación de Piernas", series: "3 Series x15" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 3: Full Body + Cardio",
-                        ejercicios: [
-                            { nombre: "Peso Muerto", series: "4 Series x12" },
-                            { nombre: "Press Militar", series: "3 Series x12" },
-                            { nombre: "Dominadas Asistidas", series: "3 Series x8" },
-                            { nombre: "Zancadas", series: "3 Series x15 por pierna" },
-                            { nombre: "Cardio: 30 min", series: "Elíptica" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 4: Descanso Activo",
-                        ejercicios: [
-                            { nombre: "Caminata Rápida", series: "40-60 min" },
-                            { nombre: "Estiramientos", series: "20 min" },
-                            { nombre: "Yoga Suave", series: "30 min" }
-                        ]
-                    },
-                    {
-                        nombre: "Día 5: Circuito Full Body",
-                        ejercicios: [
-                            { nombre: "Sentadillas con Salto", series: "4 Series x15" },
-                            { nombre: "Flexiones", series: "4 Series x15" },
-                            { nombre: "Remo con Mancuerna", series: "4 Series x15" },
-                            { nombre: "Plancha Lateral", series: "3 Series x30 seg c/lado" }
-                        ]
-                    }
-                ]
-            }
-        };
+        content.innerHTML = html;
+        container.style.display = 'block';
+        container.scrollIntoView({behavior: 'smooth'});
+    }
 
-        function generarRutina(tipoCuerpo) {
-            const rutina = rutinas[tipoCuerpo];
-            const container = document.getElementById('rutinaContainer');
-            const title = document.getElementById('routineTitle');
-            const content = document.getElementById('routineContent');
+    function cambiarDia(index) {
+        document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.training-day').forEach(d => d.classList.remove('active'));
+        document.querySelectorAll('.day-tab')[index].classList.add('active');
+        document.getElementById('day'+index).classList.add('active');
+    }
 
-            // Cerrar el modal
-            const modalElement = document.getElementById(`modal${tipoCuerpo.charAt(0).toUpperCase() + tipoCuerpo.slice(1)}`);
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            modal.hide();
-
-            // Actualizar contenido
-            title.textContent = rutina.titulo;
-            
-            let html = `
-                <div class="routine-section">
-                    <h5>📋 Descripción</h5>
-                    <p>${rutina.descripcion}</p>
-                    <p><strong>Frecuencia:</strong> ${rutina.frecuencia}</p>
-                </div>
-
-                <div class="routine-section">
-                    <h5>📅 Días de Entrenamiento</h5>
-                    <div class="d-flex flex-wrap mb-3" id="dayTabs">
-            `;
-
-            // Crear pestañas de días
-            rutina.dias.forEach((dia, index) => {
-                const diaNumero = dia.nombre.split(':')[0];
-                html += `<button class="day-tab ${index === 0 ? 'active' : ''}" onclick="cambiarDia(${index})">${diaNumero}</button>`;
-            });
-
-            html += `</div>`;
-
-            // Crear contenido de días
-            rutina.dias.forEach((dia, index) => {
-                html += `
-                    <div class="training-day ${index === 0 ? 'active' : ''}" id="day${index}">
-                        <h6 class="text-primary">${dia.nombre}</h6>
-                        <div class="row">
-                `;
-
-                dia.ejercicios.forEach(ejercicio => {
-                    html += `
-                        <div class="col-md-6">
-                            <div class="exercise-card">
-                                <div class="exercise-header">
-                                    <span class="exercise-name">${ejercicio.nombre}</span>
-                                    <span class="exercise-sets">${ejercicio.series}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                html += `</div></div>`;
-            });
-
-            html += `</div>`;
-
-            content.innerHTML = html;
-            container.style.display = 'block';
-
-            // Scroll suave a la rutina
-            container.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function cambiarDia(index) {
-            // Remover clase active de todas las pestañas y días
-            document.querySelectorAll('.day-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.training-day').forEach(day => day.classList.remove('active'));
-
-            // Agregar clase active a la pestaña y día seleccionados
-            document.querySelectorAll('.day-tab')[index].classList.add('active');
-            document.getElementById(`day${index}`).classList.add('active');
-        }
-    </script>
-</body>
-</html>
+    // Inicializar tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
 {% endblock %}
