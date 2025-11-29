@@ -167,7 +167,7 @@ p, li { font-size: 0.95rem; line-height: 1.5; }
     const rutinas = {
         ectomorfo: {
             titulo: "Rutina Ectomorfo - Ganar Masa",
-            descripcion: "Rutina de volumen con descansos largos.",
+            descripcion: "Dado que tu cuerpo presenta características propias de un somatotipo ectomorfo — es recomendable seguir una rutina de volumen enfocada en estimular al máximo la hipertrofia. Rutina de volumen con descansos largos.",
             frecuencia: "4 días por semana",
             dias: [
                 {
@@ -177,25 +177,25 @@ p, li { font-size: 0.95rem; line-height: 1.5; }
                             nombre: "Press de Banca", 
                             series: "4 Series x 8 Reps", 
                             desc: "Acuéstate en el banco. Baja la barra hasta tocar el pecho medio y sube explosivamente. Mantén los codos a 45 grados.",
-                            video: "https://www.youtube.com/embed/TAH8RxOS0VI?si=h0e0lK5qIQtxVTeu" 
+                           
                         },
                         { 
                             nombre: "Press Inclinado con Mancuernas", 
                             series: "3 Series x 10 Reps", 
                             desc: "Banco inclinado a 30°. Sube las mancuernas juntándolas arriba sin chocarlas.",
-                            video: "https://www.youtube.com/embed/TAH8RxOS0VI?si=h0e0lK5qIQtxVTeu" 
+                            
                         },
                         { 
                             nombre: "Aperturas", 
                             series: "3 Series x 12 Reps", 
                             desc: "Abre los brazos como si fueras a abrazar un árbol grande. Siente el estiramiento en el pecho.",
-                            video: "https://www.youtube.com/embed/TAH8RxOS0VI?si=h0e0lK5qIQtxVTeu" 
+                           
                         },
                         { 
                             nombre: "Fondos (Dips)", 
                             series: "3 Series x 10 Reps",
                             desc: "Baja el cuerpo doblando los codos hasta 90 grados. Inclínate hacia adelante para enfocar el pecho.",
-                            video: "https://www.youtube.com/embed/TAH8RxOS0VI?si=h0e0lK5qIQtxVTeu"
+                          
                         }
                     ]
                 },
@@ -219,14 +219,15 @@ p, li { font-size: 0.95rem; line-height: 1.5; }
         },
         mesomorfo: {
             titulo: "Rutina Mesomorfo - Hipertrofia",
-            descripcion: "Intensidad moderada-alta.",
+            descripcion: "dado que tu tipo de cuerpo es mesomorfo - te recomendamos una rutina equilibrada de hipertrofia y fuerza que aproveche al máximo tu potencial, es decir Intensidad moderada-alta.",
             frecuencia: "5 días",
             dias: [
                 {
                     nombre: "Día 1: Pecho",
                     ejercicios: [
-                        { nombre: "Press Banca", series: "4 x 6", video: "https://www.youtube.com/embed/vthMCtgGtFc" },
-                        { nombre: "Aperturas", series: "3 x 12" }
+                        { nombre: "Flexiones (Push-ups)", series: "4 x 6",desc: "Manos al ancho de los hombros, baja hasta casi tocar el suelo." },
+                        
+                        { nombre: "Aperturas", series: "3 x 12", desc: "Abre los brazos como si fueras a abrazar un árbol grande. Siente el estiramiento en el pecho." }
                     ]
                 }
                 
@@ -240,7 +241,8 @@ p, li { font-size: 0.95rem; line-height: 1.5; }
                 {
                     nombre: "Día 1: Circuito",
                     ejercicios: [
-                        { nombre: "Burpees", series: "3 x 15", desc: "Pecho al suelo y salto.", video: "https://www.youtube.com/embed/auBLPXO8Fww" },
+                        { nombre: "Burpees", series: "3 x 15", desc: "Pecho al suelo y salto." },
+                        { nombre: "Mountain Climbers", series: "3 x 20", desc: "Rodillas al pecho alternando rápido." },
                         { nombre: "Sentadillas", series: "4 x 15" }
                     ]
                 }
@@ -295,13 +297,13 @@ p, li { font-size: 0.95rem; line-height: 1.5; }
                         </div>
                         
                         <details>
-                            <summary>🎥 Ver cómo se hace</summary>
+                            <summary>Sigue las instrucciones para saber cómo se hace</summary>
                             <div class="mt-2">
                                 <p class="video-desc">${descripcion}</p>
                                 ${tieneVideo ? `
                                 <div class="ratio ratio-16x9">
                                     <iframe src="${ej.video}" allowfullscreen style="border-radius:6px;"></iframe>
-                                </div>` : '<p class="text-muted small">Video no disponible</p>'}
+                                </div>` : '<p class="text-muted small"></p>'}
                             </div>
                         </details>
                         
